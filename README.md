@@ -22,7 +22,7 @@ Piyush Agram (JPL/Caltech; piyush.agram@jpl.nasa.gov), Yang Lei (GPS/Caltech; yl
 * the program will extract the portion of the grid that overlaps with the given coregistered radar image pair, 
 * return the range and azimuth pixel indices in the radar image pair for each grid point
 * return the range and azimuth coarse displacement given the motion velocity maps and the local surface slope maps in the direction of both geographic x- and y-coordinates (they must be provided at the same grid as the DEM)
-* return the matrix of conversion coefficients that can convert the range and azimuth displacement between the two radar images (precisely estimated later with the sub-module "autorift") to motion velocity in geographic x- and y-coordinates
+* return the matrix of conversion coefficients that can convert the fine range and azimuth displacement between the two radar images (estimated with the ISCE module "autorift" or "ampcor"/"denseampcor") to motion velocity in geographic x- and y-coordinates
 * all outputs are in the format of GeoTIFF with the same EPSG code as input
 
 
@@ -34,7 +34,7 @@ Piyush Agram (JPL/Caltech; piyush.agram@jpl.nasa.gov), Yang Lei (GPS/Caltech; yl
 
 <img src="figures/geogrid.png" width="100%">
 
-***Output of "geogrid" sub-module: (a) range pixel index at each grid point, (b) azimuth pixel index at each grid point, (c) range coarse displacement at each grid point, (d) azimuth coarse displacement at each grid point. Note: only the portion of the grid overlapping with the radar image has been extracted and shown.***
+***Output of "geogrid" module: (a) range pixel index at each grid point, (b) azimuth pixel index at each grid point, (c) range coarse displacement at each grid point, (d) azimuth coarse displacement at each grid point. Note: only the portion of the grid overlapping with the radar image has been extracted and shown.***
 
 
 Using the matrix of conversion coefficients, when fine pixel displacement are estimated from radar data, they can be immediately converted to motion velocity. See the final result below by using the matrix of conversion coefficients from the "geogrid" module and the radar-estimated fine pixel displacement from the "autorift" module.
@@ -62,11 +62,11 @@ Using the matrix of conversion coefficients, when fine pixel displacement are es
 * It is recommended to run ISCE up to the step where coregistered SLC's are done, e.g. "mergebursts" for using topsApp.
 
 For quick use:
-* Refer to the file "testGeogrid.py" for the usage of the sub-module and modify it for your own purpose
+* Refer to the file "testGeogrid.py" for the usage of the module and modify it for your own purpose
 * Input files include the master image folder (required), slave image folder (required), a DEM (required), local surface slope maps, velocity maps
 
 For modular use:
-* In Python environment, type the following to import the "geogrid" sub-module and initialize the "geogrid" object
+* In Python environment, type the following to import the "geogrid" module and initialize the "geogrid" object
 
        import isce
        from components.contrib.geoAutorift.geogrid.Geogrid import Geogrid
@@ -97,7 +97,7 @@ For modular use:
        winro2vxname:        (output) name of the conversion coefficients from radar displacement (range and azimuth) to motion velocity in x-coordinate (at each grid point) file
        winro2vyname:        (output) name of the conversion coefficients from radar displacement (range and azimuth) to motion velocity in y-coordinate (at each grid point) file
 
-* After the above parameters are set, run the sub-module as below to create the output files
+* After the above parameters are set, run the module as below to create the output files
 
        obj.geogrid()
 
