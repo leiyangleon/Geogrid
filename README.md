@@ -46,7 +46,7 @@ Using the matrix of conversion coefficients, when fine pixel displacement are es
 ***Final motion velocity results by combining outputs from "geogrid" and "autorift" modules: (a) estimated motion velocity from Sentinel-1 data (x-direction; in m/yr), (b) coarse motion velocity from input data (x-direction; in m/yr), (c) estimated motion velocity from Sentinel-1 data (y-direction; in m/yr), (b) coarse motion velocity from input data (y-direction; in m/yr). Notes: all maps are established exactly over the same geographic-coordinate grid from input.***
 
 
-## 3. Install
+## 4. Install
 
 * First install ISCE
 * Put the "geoAutorift" folder and the "Sconscript" file under the "contrib" folder that is one level down ISCE's source directory (denoted as "isce-version"; where you started installing ISCE), i.e. "isce-version/contrib/" (see the snapshot below)
@@ -56,7 +56,7 @@ Using the matrix of conversion coefficients, when fine pixel displacement are es
 * run "scons install" again from ISCE's source directory "isce-version" using command line
 
 
-## 4. Instructions
+## 5. Instructions
 
 
 
