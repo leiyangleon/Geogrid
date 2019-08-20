@@ -37,6 +37,12 @@ Piyush Agram (JPL/Caltech; piyush.agram@jpl.nasa.gov), Yang Lei (GPS/Caltech; yl
 
 ***Output of "geogrid" module: (a) range pixel index at each grid point, (b) azimuth pixel index at each grid point, (c) range coarse displacement at each grid point, (d) azimuth coarse displacement at each grid point. Note: only the portion of the grid overlapping with the radar image has been extracted and shown.***
 
+This is obtained by implementing the following command line:
+
+       testGeogrid.py -m master_image_folder -s slave_image_folder -d demname -sx dhdxname -sy dhdyname -vx vxname -vy vyname
+
+where "master_image_folder" and "slave_image_folder" are the folders storing master and slave image information (e.g. radar parameters), and "demname", "dhdxname", "dhdyname", "vxname", "vyname" are defined below in the instructions.
+
 
 Using the matrix of conversion coefficients, when fine pixel displacement are estimated from radar data, they can be immediately converted to motion velocity. See the final result below by using the matrix of conversion coefficients from the "geogrid" module and the radar-estimated fine pixel displacement from the "autorift" module.
 
