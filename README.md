@@ -65,7 +65,8 @@ Using the matrix of conversion coefficients, when fine pixel displacement are es
 For quick use:
 * Refer to the file "testGeogrid.py" for the usage of the module and modify it for your own purpose
 * Input files include the master image folder (required), slave image folder (required), a DEM (required), local surface slope maps, velocity maps
-* Output files include 1) the range and azimuth pixel indices, 2) the range and azimuth coarse displacement, 3) the conversion coefficients from radar range and azimuth displacement to motion velocity in geographic x-coordinate, and 4) the conversion coefficients from radar range and azimuth displacement to motion velocity in geographic y-coordinate. _Among these, 1) will always be created, while 2)-4) will be generated contingent upon that local surface slope and velocity maps are provided_
+* Output files include 1) the range and azimuth pixel indices, 2) the range and azimuth coarse displacement, 3) the conversion coefficients from radar range and azimuth displacement to motion velocity in geographic x-coordinate, and 4) the conversion coefficients from radar range and azimuth displacement to motion velocity in geographic y-coordinate. 
+_Note: among these, 1) will always be created, while 2-4) will be generated contingent upon that local surface slope and velocity maps are provided_
 
 For modular use:
 * In Python environment, type the following to import the "geogrid" module and initialize the "geogrid" object
@@ -98,8 +99,7 @@ For modular use:
        winoffname:          (output) file name of the range and azimuth coarse displacement (at each grid point)
        winro2vxname:        (output) file name of the conversion coefficients from radar displacement (range and azimuth) to motion velocity in x-coordinate (at each grid point)
        winro2vyname:        (output) file name of the conversion coefficients from radar displacement (range and azimuth) to motion velocity in y-coordinate (at each grid point)
-
-       _ Note: "winoffname", "winro2vxname" and "winro2vyname" will be created only when "dhdxname", "dhdyname", "vxname", and "vyname" are provided _
+       Note: "winoffname", "winro2vxname" and "winro2vyname" will be created only when "dhdxname", "dhdyname", "vxname", and "vyname" are provided
 
 * After the above parameters are set, run the module as below to create the output files
 
