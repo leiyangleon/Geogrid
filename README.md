@@ -99,7 +99,7 @@ For modular use:
        winro2vxname:        (output) file name of the conversion coefficients from radar displacement (range and azimuth) to motion velocity in x-coordinate (at each grid point)
        winro2vyname:        (output) file name of the conversion coefficients from radar displacement (range and azimuth) to motion velocity in y-coordinate (at each grid point)
 
-_"winoffname", "winro2vxname" and "winro2vyname" will be created only when "dhdxname", "dhdyname", "vxname", and "vyname" are provided_
+       _ Note: "winoffname", "winro2vxname" and "winro2vyname" will be created only when "dhdxname", "dhdyname", "vxname", and "vyname" are provided _
 
 * After the above parameters are set, run the module as below to create the output files
 
