@@ -1,6 +1,6 @@
 # geogrid
 
-ISCE module for mapping between pixel displacement in a radar image pair (in radar coordinates) and motion velocity (in geographic coordinates) at a user-defined geographic-coordinate grid where the Digital Elevation Model (DEM) and/or local surface slope and coarse motion velocity maps are defined
+ISCE module for mapping between pixel displacement in a radar image pair (in radar coordinates) and motion velocity at a user-defined geographic-coordinate grid (in geographic coordinates) where the Digital Elevation Model (DEM) and/or local surface slope and coarse motion velocity maps are defined
 
 
 Copyright (C) 2019 California Institute of Technology.  Government Sponsorship Acknowledged.
