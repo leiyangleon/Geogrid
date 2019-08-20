@@ -59,7 +59,8 @@ Using the matrix of conversion coefficients, when fine pixel displacement are es
 
 <img src="figures/install_snapshot.png" width="35%">
 
-* run "scons install" again from ISCE's source directory "isce-version" using command line
+* Run "scons install" again from ISCE's source directory "isce-version" using command line
+* This distribution automatically installs the "geogrid" module as well as the "autorift" module (https://github.com/leiyangleon/Autorift).
 
 
 ## 5. Instructions
