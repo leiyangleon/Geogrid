@@ -44,7 +44,7 @@ This is obtained by implementing the following command line:
 where "master_image_folder" and "slave_image_folder" are the folders storing master and slave image information (e.g. radar parameters), and "demname", "dhdxname", "dhdyname", "vxname", "vyname" are defined below in the instructions.
 
 
-Using the matrix of conversion coefficients, when fine pixel displacement are estimated from radar data, they can be immediately converted to motion velocity. See the final result below by using the matrix of conversion coefficients from the "geogrid" module and the radar-estimated fine pixel displacement from the "autorift" module.
+Using the matrix of conversion coefficients, when fine pixel displacement are estimated from radar data, they can be immediately converted to motion velocity. See the final result below by using the matrix of conversion coefficients from the "geogrid" module and the radar-estimated fine pixel displacement from the "autorift" module (https://github.com/leiyangleon/Autorift).
 
 
 <img src="figures/autorift2.png" width="100%">
