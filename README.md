@@ -1,4 +1,4 @@
-# geogrid
+# Geogrid
 
 ISCE module for mapping between pixel displacement in a radar image pair (in radar coordinates) and motion velocity at a user-defined geographic-coordinate grid (in geographic coordinates) where the Digital Elevation Model (DEM) and/or local surface slope and coarse motion velocity maps are defined
 
@@ -66,6 +66,7 @@ For quick use:
 * Refer to the file "testGeogrid.py" for the usage of the module and modify it for your own purpose
 * Input files include the master image folder (required), slave image folder (required), a DEM (required), local surface slope maps, velocity maps
 * Output files include 1) the range and azimuth pixel indices, 2) the range and azimuth coarse displacement, 3) the conversion coefficients from radar range and azimuth displacement to motion velocity in geographic x-coordinate, and 4) the conversion coefficients from radar range and azimuth displacement to motion velocity in geographic y-coordinate. 
+
 _Note: among these, 1) will always be created, while 2-4) will be generated contingent upon that local surface slope and velocity maps are provided_
 
 For modular use:
