@@ -200,10 +200,6 @@ where "Geogrid()" is for radar data and "GeogridOptical()" for optical data.
 
 * After the above parameters are set, run the module as below to create the output files
 
-       obj.geogrid()
+       obj.geogrid() or obj.runGeogrid()
 
-for radar data, and
-
-       obj.runGeogrid()
-
-for optical data.
+where "obj.geogrid()" is for radar data, and "obj.runGeogrid()" for optical data.
