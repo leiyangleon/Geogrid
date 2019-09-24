@@ -89,7 +89,7 @@ Standalone:
 
        testGeogridOptical.py -m image1 -s image2 -d demname -sx dhdxname -sy dhdyname -vx vxname -vy vyname
 
-where "image1" and "image2" are the folders storing optical image information (e.g. projection, coordinates), and "demname", "dhdxname", "dhdyname", "vxname", "vyname" are defined below in the instructions.
+where "image1" and "image2" are the folders storing optical image information (e.g. projection, coordinates), and "demname", "dhdxname", "dhdyname", "vxname", "vyname" are defined below in the instructions. The "-fo" option of "testGeogrid_ISCE.py" indicates whether or not to read optical image data.
 
 
 Using the matrix of conversion coefficients, when fine pixel displacement are estimated from optical data, they can be immediately converted to motion velocity. See the final result below by using the matrix of conversion coefficients from the "Geogrid" module and the optical data-estimated fine pixel displacement from the "autoRIFT" module (https://github.com/leiyangleon/autoRIFT).
@@ -127,27 +127,44 @@ Using the matrix of conversion coefficients, when fine pixel displacement are es
 ## 5. Instructions
 
 
+Note:
+* For radar data, it is recommended to run ISCE up to the step where co-registered SLC's are done, e.g. "mergebursts" for using topsApp.
+* For optical data, the optical images have to be co-registered with the same posting as well as the same x- and y-limits in map coordinates.
 
-* It is recommended to run ISCE up to the step where coregistered SLC's are done, e.g. "mergebursts" for using topsApp.
-
-For quick use:
-* Refer to the file "testGeogrid.py" for the usage of the module and modify it for your own purpose
+**For quick use:**
+_Radar data:_
+* Refer to the file "testGeogrid_ISCE.py" (with ISCE) for the usage of the module and modify it for your own purpose
 * Input files include the master image folder (required), slave image folder (required), a DEM (required), local surface slope maps, velocity maps
 * Output files include 1) the range and azimuth pixel indices, 2) the range and azimuth coarse displacement, 3) the conversion coefficients from radar range and azimuth displacement to motion velocity in geographic x-coordinate, and 4) the conversion coefficients from radar range and azimuth displacement to motion velocity in geographic y-coordinate. 
 
+_Optical data:_
+* Refer to the file "testGeogrid_ISCE.py" (with ISCE) and "testGeogridOptical.py" (standalone) for the usage of the module and modify it for your own purpose
+* Input files include the image 1 (required), image 2 (required), a DEM (required), local surface slope maps, velocity maps
+* Output files include 1) the horizontal and vertical pixel indices, 2) the horizontal and vertical coarse displacement, 3) the conversion coefficients from horizontal and vertical displacement to motion velocity in geographic x-coordinate, and 4) the conversion coefficients from horizontal and vertical displacement to motion velocity in geographic y-coordinate. 
+
 _Note: among these, 1) will always be created, while 2-4) will be generated contingent upon that local surface slope and velocity maps are provided_
 
-For modular use:
-* In Python environment, type the following to import the "geogrid" module and initialize the "geogrid" object
+**For modular use:**
+* In Python environment, type the following to import the "Geogrid" module and initialize the "Geogrid" object
+
+_With ISCE:_
 
        import isce
-       from components.contrib.geoAutorift.geogrid.Geogrid import Geogrid
-       obj = Geogrid()
+       from contrib.geo_autoRIFT.geogrid import Geogrid, GeogridOptical
+       obj = Geogrid() or obj = GeogridOptical()
        obj.configure()
 
-* The "geogrid" object has several parameters that have to be set up (listed below; can also be obtained by referring to "testGeogrid.py"): 
+_Standalone:_
 
-       ------------------radar parameters------------------
+       import GeogridOptical as GO
+       obj = GO.GeogridOptical()
+
+where "Geogrid()" is for radar data and "GeogridOptical()" for optical data.
+
+
+* The "Geogrid" object has several parameters that have to be set up (listed below; can also be obtained by referring to "testGeogrid_ISCE.py"): 
+
+       ------------------radar parameters (for radar only)------------------
        startingRange:       starting range
        rangePixelSize:      range pixel size
        sensingStart:        starting azimuth time
@@ -157,12 +174,23 @@ For modular use:
        numberOfLines:       number of lines (in azimuth)
        numberOfSamples:     number of samples (in range)
        orbit:               ISCE orbit data structure
+       
+       ------------------optical parameters (for optical only)------------------
+       startingX:           starting coordinate in x direction
+       startingY:           starting coordinate in y direction
+       XSize:               resolution in x direction
+       YSize:               resolution in y direction
+       repeatTime:          time period between the acquisition of the two optical images
+       numberOfLines:       number of lines (in y direction)
+       numberOfSamples:     number of samples (in x direction)
+       
        ------------------input file names------------------
        demname:             (input; required) file name of the DEM
        dhdxname:            (input; not required) file name of the local surface slope in x-coodinate
        dhdyname:            (input; not required) file name of the local surface slope in y-coodinate
        vxname:              (input; not required) file name of the motion velocity in x-coodinate
        vyname:              (input; not required) file name of the motion velocity in y-coodinate
+       
        ------------------output file names------------------
        winlocname:          (output) file name for the range and azimuth pixel indices (at each grid point)
        winoffname:          (output) file name of the range and azimuth coarse displacement (at each grid point)
@@ -174,4 +202,8 @@ For modular use:
 
        obj.geogrid()
 
+for radar data, and
 
+       obj.runGeogrid()
+
+for optical data.
