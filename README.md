@@ -1,21 +1,29 @@
 # Geogrid
 
-ISCE module for mapping between pixel displacement in a radar image pair (in radar coordinates) and motion velocity at a user-defined geographic-coordinate grid (in geographic coordinates) where the Digital Elevation Model (DEM) and/or local surface slope and coarse motion velocity maps are defined
+**Python module for precise mapping between (pixel index, pixel displacement) in imaging coordinates and (geolocation, movement velocity) in geographic coordinates**
+
+**The current version can be installed with the ISCE (The InSAR Scientific Computing Environment; https://github.com/isce-framework/isce2) software (that supports both radar and optical images) or as a standalone Python module (only supports optical images)**
+
+**In combination with the Python module, autoRIFT (https://github.com/leiyangleon/autoRIFT), this module can be used to create feature tracking imagery (e.g. land ice motion velocity) over arbitrary geographic-coordinate grid (e.g. Digital Elevation Model)**
 
 
 Copyright (C) 2019 California Institute of Technology.  Government Sponsorship Acknowledged.
 
-Citation: https://github.com/leiyangleon/geogrid
+Link: https://github.com/leiyangleon/Geogrid
+
+
 
 ## 1. Authors
 
 
 Piyush Agram (JPL/Caltech; piyush.agram@jpl.nasa.gov), Yang Lei (GPS/Caltech; ylei@caltech.edu)
 
+## 2. Acknowledgement
 
+This effort was funded by the NASA MEaSUREs program in contribution to the Inter-mission Time Series of Land Ice Velocity and Elevation (ITS_LIVE) project (https://its-live.jpl.nasa.gov/) and through Alex Gardner’s participation in the NASA NISAR Science Team
        
        
-## 2. Features
+## 3. Features
 
 
 * user can define a grid in geographic coordinates provided in the form of a DEM with arbitrary EPSG code, 
@@ -23,9 +31,13 @@ Piyush Agram (JPL/Caltech; piyush.agram@jpl.nasa.gov), Yang Lei (GPS/Caltech; yl
 * return the range and azimuth pixel indices in the radar image pair for each grid point
 * return the range and azimuth coarse displacement given the motion velocity maps and the local surface slope maps in the direction of both geographic x- and y-coordinates (they must be provided at the same grid as the DEM)
 * return the matrix of conversion coefficients that can convert the fine range and azimuth displacement between the two radar images (estimated with the ISCE module "autorift" or "ampcor"/"denseampcor") to motion velocity in geographic x- and y-coordinates
+* the current version can be installed with the ISCE software (that supports both radar and optical images) or as a standalone Python module (only supports optical images)
+* in combination with the Python module, autoRIFT (https://github.com/leiyangleon/autoRIFT), this module can be used to create feature tracking imagery (e.g. land ice motion velocity) over arbitrary geographic-coordinate grid (e.g. Digital Elevation Model)
 * all outputs are in the format of GeoTIFF with the same EPSG code as input
 
-## 3. Demo
+## 4. Demo
+
+_4.1 Radar Demo:_
 
 <img src="figures/optical1.png" width="50%">
 
@@ -35,7 +47,7 @@ Piyush Agram (JPL/Caltech; piyush.agram@jpl.nasa.gov), Yang Lei (GPS/Caltech; yl
 
 <img src="figures/geogrid.png" width="100%">
 
-***Output of "geogrid" module: (a) range pixel index at each grid point, (b) azimuth pixel index at each grid point, (c) range coarse displacement at each grid point, (d) azimuth coarse displacement at each grid point. Note: only the portion of the grid overlapping with the radar image has been extracted and shown.***
+***Output of "Geogrid" module: (a) range pixel index at each grid point, (b) azimuth pixel index at each grid point, (c) range coarse displacement at each grid point, (d) azimuth coarse displacement at each grid point. Note: only the portion of the grid overlapping with the radar image pair has been extracted and shown.***
 
 This is obtained by implementing the following command line:
 
@@ -44,23 +56,64 @@ This is obtained by implementing the following command line:
 where "master_image_folder" and "slave_image_folder" are the folders storing master and slave image information (e.g. radar parameters), and "demname", "dhdxname", "dhdyname", "vxname", "vyname" are defined below in the instructions.
 
 
-Using the matrix of conversion coefficients, when fine pixel displacement are estimated from radar data, they can be immediately converted to motion velocity. See the final result below by using the matrix of conversion coefficients from the "geogrid" module and the radar-estimated fine pixel displacement from the "autorift" module (https://github.com/leiyangleon/Autorift).
+Using the matrix of conversion coefficients, when fine pixel displacement are estimated from radar data, they can be immediately converted to motion velocity. See the final result below by using the matrix of conversion coefficients from the "Geogrid" module and the radar-estimated fine pixel displacement from the "autoRIFT" module (https://github.com/leiyangleon/autoRIFT).
 
 
 <img src="figures/autorift2.png" width="100%">
 
-***Final motion velocity results by combining outputs from "geogrid" and "autorift" modules: (a) estimated motion velocity from Sentinel-1 data (x-direction; in m/yr), (b) coarse motion velocity from input data (x-direction; in m/yr), (c) estimated motion velocity from Sentinel-1 data (y-direction; in m/yr), (b) coarse motion velocity from input data (y-direction; in m/yr). Notes: all maps are established exactly over the same geographic-coordinate grid from input.***
+***Final motion velocity results by combining outputs from "Geogrid" and "autoRIFT" modules: (a) estimated motion velocity from Sentinel-1 data (x-direction; in m/yr), (b) coarse motion velocity from input data (x-direction; in m/yr), (c) estimated motion velocity from Sentinel-1 data (y-direction; in m/yr), (b) coarse motion velocity from input data (y-direction; in m/yr). Notes: all maps are established exactly over the same geographic-coordinate grid from input.***
 
 
-## 4. Install
 
-* First install ISCE
-* Put the "geoAutorift" folder and the "Sconscript" file under the "contrib" folder that is one level down ISCE's source directory (denoted as "isce-version"; where you started installing ISCE), i.e. "isce-version/contrib/" (see the snapshot below)
+_4.2 Optical Demo:_
 
-<img src="figures/install_snapshot.png" width="35%">
+<img src="figures/optical_opt.png" width="50%">
+
+***Test area and dataset: optical image over Greenland (to the north of the Jakobshavn glacier) where the red rectangle marks boundary of the Landsat-8 image pair (20170708-20170724). Input files in this test scenario consist of the Digital Elevation Model (DEM), local surface slope maps (in both x- and y-direction) and coarse motion velocity maps (in both x- and y-direction) over the entire Greenland, where all maps share the same geographic-coordinate grid with 240-m spacing and spatial reference system with EPSG code 3413 (a.k.a WGS 84 / NSIDC Sea Ice Polar Stereographic North).***
+
+
+
+<img src="figures/geogrid_opt.png" width="100%">
+
+***Output of "Geogrid" module: (a) horizontal pixel index at each grid point, (b) vertical pixel index at each grid point, (c) horizontal coarse displacement at each grid point, (d) vertical coarse displacement at each grid point. Note: only the portion of the grid overlapping with the optical image pair has been extracted and shown.***
+
+This is obtained by implementing the following command line:
+
+       testGeogridOptical.py -m image1 -s image2 -d demname -sx dhdxname -sy dhdyname -vx vxname -vy vyname
+
+where "image1" and "image2" are the folders storing optical image information (e.g. projection, coordinates), and "demname", "dhdxname", "dhdyname", "vxname", "vyname" are defined below in the instructions.
+
+
+Using the matrix of conversion coefficients, when fine pixel displacement are estimated from optical data, they can be immediately converted to motion velocity. See the final result below by using the matrix of conversion coefficients from the "Geogrid" module and the optical data-estimated fine pixel displacement from the "autoRIFT" module (https://github.com/leiyangleon/autoRIFT).
+
+
+<img src="figures/autorift2_opt.png" width="100%">
+
+***Final motion velocity results by combining outputs from "Geogrid" and "autoRIFT" modules: (a) estimated motion velocity from Landsat-8 data (x-direction; in m/yr), (b) coarse motion velocity from input data (x-direction; in m/yr), (c) estimated motion velocity from Landsat-8 data (y-direction; in m/yr), (b) coarse motion velocity from input data (y-direction; in m/yr). Notes: all maps are established exactly over the same geographic-coordinate grid from input.***
+
+
+## 6. Install
+
+**With ISCE:**
+
+* First install ISCE (https://github.com/isce-framework/isce2)
+* Put the "geo_autoRIFT" folder and the "Sconscript" file under the "contrib" folder that is one level down ISCE's source directory (denoted as "isce-version"; where you started installing ISCE), i.e. "isce-version/contrib/" (see the snapshot below)
+
+<img src="figures/install_ISCE.png" width="35%">
 
 * Run "scons install" again from ISCE's source directory "isce-version" using command line
-* This distribution automatically installs the "geogrid" module as well as the "autorift" module (https://github.com/leiyangleon/Autorift).
+* This distribution automatically installs the "autoRIFT" module as well as the "Geogrid" module (https://github.com/leiyangleon/Geogrid).
+
+
+**Standalone:**
+
+* Put the "geo_autoRIFT" folder and the "setup.py" file under some source directory (see the snapshot below)
+
+<img src="figures/install_standalone.png" width="35%">
+
+* Run "python3 setup.py install" or "sudo python3 setup.py install" (if the previous failed due to permission) using command line
+* This distribution automatically installs the "autoRIFT" module as well as the "Geogrid" module (https://github.com/leiyangleon/Geogrid)
+* The standalone version only supports optical images.
 
 
 ## 5. Instructions
