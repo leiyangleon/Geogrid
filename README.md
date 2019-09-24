@@ -51,7 +51,9 @@ _4.1 Radar Demo:_
 
 This is obtained by implementing the following command line:
 
-       testGeogrid.py -m master_image_folder -s slave_image_folder -d demname -sx dhdxname -sy dhdyname -vx vxname -vy vyname
+With ISCE:
+
+       testGeogrid_ISCE.py -m master_image_folder -s slave_image_folder -d demname -sx dhdxname -sy dhdyname -vx vxname -vy vyname
 
 where "master_image_folder" and "slave_image_folder" are the folders storing master and slave image information (e.g. radar parameters), and "demname", "dhdxname", "dhdyname", "vxname", "vyname" are defined below in the instructions.
 
@@ -79,6 +81,12 @@ _4.2 Optical Demo:_
 
 This is obtained by implementing the following command line:
 
+With ISCE:
+
+       testGeogrid_ISCE.py -m image1 -s image2 -d demname -sx dhdxname -sy dhdyname -vx vxname -vy vyname -fo 1
+
+Standalone:
+
        testGeogridOptical.py -m image1 -s image2 -d demname -sx dhdxname -sy dhdyname -vx vxname -vy vyname
 
 where "image1" and "image2" are the folders storing optical image information (e.g. projection, coordinates), and "demname", "dhdxname", "dhdyname", "vxname", "vyname" are defined below in the instructions.
@@ -102,7 +110,7 @@ Using the matrix of conversion coefficients, when fine pixel displacement are es
 <img src="figures/install_ISCE.png" width="35%">
 
 * Run "scons install" again from ISCE's source directory "isce-version" using command line
-* This distribution automatically installs the "autoRIFT" module as well as the "Geogrid" module (https://github.com/leiyangleon/Geogrid).
+* This distribution automatically installs the "Geogrid" module as well as the "autoRIFT" module (https://github.com/leiyangleon/autoRIFT).
 
 
 **Standalone:**
@@ -111,8 +119,8 @@ Using the matrix of conversion coefficients, when fine pixel displacement are es
 
 <img src="figures/install_standalone.png" width="35%">
 
-* Run "python3 setup.py install" or "sudo python3 setup.py install" (if the previous failed due to permission) using command line
-* This distribution automatically installs the "autoRIFT" module as well as the "Geogrid" module (https://github.com/leiyangleon/Geogrid)
+* Run "python3 setup.py install" or "sudo python3 setup.py install" (if the previous failed due to permission restriction) using command line
+* This distribution automatically installs the "Geogrid" module as well as the "autoRIFT" module (https://github.com/leiyangleon/autoRIFT)
 * The standalone version only supports optical images.
 
 
