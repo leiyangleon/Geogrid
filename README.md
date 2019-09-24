@@ -127,11 +127,13 @@ Using the matrix of conversion coefficients, when fine pixel displacement are es
 ## 5. Instructions
 
 
-Note:
+**Note:**
+
 * For radar data, it is recommended to run ISCE up to the step where co-registered SLC's are done, e.g. "mergebursts" for using topsApp.
 * For optical data, the optical images have to be co-registered with the same posting as well as the same x- and y-limits in map coordinates.
 
 **For quick use:**
+
 _Radar data:_
 * Refer to the file "testGeogrid_ISCE.py" (with ISCE) for the usage of the module and modify it for your own purpose
 * Input files include the master image folder (required), slave image folder (required), a DEM (required), local surface slope maps, velocity maps
@@ -145,6 +147,7 @@ _Optical data:_
 _Note: among these, 1) will always be created, while 2-4) will be generated contingent upon that local surface slope and velocity maps are provided_
 
 **For modular use:**
+
 * In Python environment, type the following to import the "Geogrid" module and initialize the "Geogrid" object
 
 _With ISCE:_
