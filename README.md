@@ -1,6 +1,6 @@
 # Geogrid
 
-**Python module for precise mapping between (pixel index, pixel displacement) in imaging coordinates and (geolocation, movement velocity) in geographic coordinates**
+**Python module for precise mapping between (pixel index, pixel displacement) in imaging coordinates and (geolocation, motion velocity) in geographic coordinates**
 
 **The current version can be installed with the ISCE (The InSAR Scientific Computing Environment; https://github.com/isce-framework/isce2) software (that supports both radar and optical images) or as a standalone Python module (only supports optical images)**
 
