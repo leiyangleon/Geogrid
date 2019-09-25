@@ -27,6 +27,9 @@ This effort was funded by the NASA MEaSUREs program in contribution to the Inter
 
 * user can define a grid in geographic coordinates provided in the form of a Digital Elevation Model (DEM) with arbitrary EPSG code, 
 * the program will extract the portion of the grid that overlaps with the given co-registered image pair, 
+* for radar images, use radar orbit information plus DEM along with GDAL coordinate transformation to precisely map the geolocation and the motion velocity (in geographic coordinates) at each grid point to the corresponding pixel index and pixel displacement (in imaging coordinates) in the radar image pair, where the imaging along-track and line-of-sight unit vectors are precisely derived at each grid point
+* the z-direction motion velocity is estimated using the irrotational flow assumption as well as inputs from the x- and y-direction motion velocity maps and the x- and y-direction local surface slope maps
+* for optical images, use map coordinate information of the optical image pair along with GDAL coordinate transformation to precisely map the geolocation and the motion velocity (in geographic coordinates) at each grid point to the corresponding pixel index and pixel displacement (in imaging coordinates) in the optical image pair, where the imaging horizontal- and vertical-direction unit vectors are precisely derived at each grid point
 * return the pixel indices in the image pair for each grid point
 * return the coarse pixel displacement given the motion velocity maps and the local surface slope maps in the direction of both geographic x- and y-coordinates (they must be provided at the same grid as the DEM)
 * return the matrix of conversion coefficients that can convert the fine pixel displacement between the two images (estimated with the Python module "autoRIFT" https://github.com/leiyangleon/autoRIFT) to motion velocity in geographic x- and y-coordinates
