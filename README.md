@@ -25,7 +25,7 @@ This effort was funded by the NASA MEaSUREs program in contribution to the Inter
        
 ## 3. Features
 
-* user can define a grid in geographic coordinates provided in the form of a DEM with arbitrary EPSG code, 
+* user can define a grid in geographic coordinates provided in the form of a Digital Elevation Model (DEM) with arbitrary EPSG code, 
 * the program will extract the portion of the grid that overlaps with the given co-registered image pair, 
 * return the pixel indices in the image pair for each grid point
 * return the coarse pixel displacement given the motion velocity maps and the local surface slope maps in the direction of both geographic x- and y-coordinates (they must be provided at the same grid as the DEM)
