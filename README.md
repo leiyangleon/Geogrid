@@ -25,12 +25,11 @@ This effort was funded by the NASA MEaSUREs program in contribution to the Inter
        
 ## 3. Features
 
-
 * user can define a grid in geographic coordinates provided in the form of a DEM with arbitrary EPSG code, 
-* the program will extract the portion of the grid that overlaps with the given coregistered radar image pair, 
-* return the range and azimuth pixel indices in the radar image pair for each grid point
-* return the range and azimuth coarse displacement given the motion velocity maps and the local surface slope maps in the direction of both geographic x- and y-coordinates (they must be provided at the same grid as the DEM)
-* return the matrix of conversion coefficients that can convert the fine range and azimuth displacement between the two radar images (estimated with the ISCE module "autorift" or "ampcor"/"denseampcor") to motion velocity in geographic x- and y-coordinates
+* the program will extract the portion of the grid that overlaps with the given co-registered image pair, 
+* return the pixel indices in the image pair for each grid point
+* return the coarse pixel displacement given the motion velocity maps and the local surface slope maps in the direction of both geographic x- and y-coordinates (they must be provided at the same grid as the DEM)
+* return the matrix of conversion coefficients that can convert the fine pixel displacement between the two images (estimated with the Python module "autoRIFT" https://github.com/leiyangleon/autoRIFT) to motion velocity in geographic x- and y-coordinates
 * the current version can be installed with the ISCE software (that supports both radar and optical images) or as a standalone Python module (only supports optical images)
 * in combination with the Python module, autoRIFT (https://github.com/leiyangleon/autoRIFT), this module can be used to create feature tracking imagery (e.g. land ice motion velocity) over arbitrary geographic-coordinate grid (e.g. Digital Elevation Model)
 * all outputs are in the format of GeoTIFF with the same EPSG code as input
