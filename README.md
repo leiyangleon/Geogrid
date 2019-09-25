@@ -192,16 +192,16 @@ where "Geogrid()" is for radar data and "GeogridOptical()" for optical data.
        
        ------------------input file names------------------
        demname:             (input; required) file name of the DEM
-       dhdxname:            (input; not required) file name of the local surface slope in x-coodinate
-       dhdyname:            (input; not required) file name of the local surface slope in y-coodinate
-       vxname:              (input; not required) file name of the motion velocity in x-coodinate
-       vyname:              (input; not required) file name of the motion velocity in y-coodinate
+       dhdxname:            (input; not required) file name of the local surface slope in geographic x-coodinate
+       dhdyname:            (input; not required) file name of the local surface slope in geographic y-coodinate
+       vxname:              (input; not required) file name of the motion velocity in geographic x-coodinate
+       vyname:              (input; not required) file name of the motion velocity in geographic y-coodinate
        
        ------------------output file names------------------
-       winlocname:          (output) file name for the range and azimuth pixel indices (at each grid point)
-       winoffname:          (output) file name of the range and azimuth coarse displacement (at each grid point)
-       winro2vxname:        (output) file name of the conversion coefficients from radar displacement (range and azimuth) to motion velocity in x-coordinate (at each grid point)
-       winro2vyname:        (output) file name of the conversion coefficients from radar displacement (range and azimuth) to motion velocity in y-coordinate (at each grid point)
+       winlocname:          (output) file name for the pixel indices (at each grid point)
+       winoffname:          (output) file name of the coarse displacement (at each grid point)
+       winro2vxname:        (output) file name of the conversion coefficients from pixel displacement to motion velocity in geographic x-coordinate (at each grid point)
+       winro2vyname:        (output) file name of the conversion coefficients from pixel displacement to motion velocity in geographic y-coordinate (at each grid point)
        Note: "winoffname", "winro2vxname" and "winro2vyname" will be created only when "dhdxname", "dhdyname", "vxname", and "vyname" are provided
 
 * After the above parameters are set, run the module as below to create the output files
