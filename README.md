@@ -31,7 +31,7 @@ This effort was funded by the NASA MEaSUREs program in contribution to the Inter
 * for optical images, use map coordinate information of the optical image pair along with GDAL coordinate transformation to precisely map the geolocation and the motion velocity (in geographic coordinates) at each grid point to the corresponding pixel index and pixel displacement (in imaging coordinates) in the optical image pair, where the imaging horizontal- and vertical-direction unit vectors are precisely derived at each grid point
 * the geographic z-direction motion velocity is estimated using the irrotational flow assumption as well as inputs from the geographic x- and y-direction motion velocity maps and the geographic x- and y-direction local surface slope maps
 * return the pixel indices in the image pair for each grid point
-* return the coarse pixel displacement given the motion velocity maps and the local surface slope maps in the direction of both geographic x- and y-coordinates (they must be provided at the same grid as the DEM)
+* return the pixel displacement given the motion velocity maps and the local surface slope maps in the direction of both geographic x- and y-coordinates (they must be provided at the same grid as the DEM)
 * return the matrix of conversion coefficients that can convert the fine pixel displacement between the two images (estimated with the Python module "autoRIFT" https://github.com/leiyangleon/autoRIFT) to motion velocity in geographic x- and y-coordinates
 * the current version can be installed with the ISCE software (that supports both radar and optical images) or as a standalone Python module (only supports optical images)
 * in combination with the Python module, autoRIFT (https://github.com/leiyangleon/autoRIFT), this module can be used to create feature tracking imagery (e.g. land ice motion velocity) over arbitrary geographic-coordinate grid (e.g. Digital Elevation Model)
@@ -43,13 +43,13 @@ _4.1 Radar Demo:_
 
 <img src="figures/optical1.png" width="50%">
 
-***Test area and dataset: optical image over the Jakobshavn glacier where the red rectangle marks boundary of the Sentinel-1A/B image pair (20170221-20170227). Input files in this test scenario consist of the Digital Elevation Model (DEM), local surface slope maps (in both x- and y-direction) and coarse motion velocity maps (in both x- and y-direction) over the entire Greenland, where all maps share the same geographic-coordinate grid with 240-m spacing and spatial reference system with EPSG code 3413 (a.k.a WGS 84 / NSIDC Sea Ice Polar Stereographic North).***
+***Test area and dataset: optical image over the Jakobshavn glacier where the red rectangle marks boundary of the Sentinel-1A/B image pair (20170221-20170227). Input files in this test scenario consist of the Digital Elevation Model (DEM), local surface slope maps (in both x- and y-direction) and motion velocity maps (in both x- and y-direction) over the entire Greenland, where all maps share the same geographic-coordinate grid with 240-m spacing and spatial reference system with EPSG code 3413 (a.k.a WGS 84 / NSIDC Sea Ice Polar Stereographic North).***
 
 
 
 <img src="figures/geogrid.png" width="100%">
 
-***Output of "Geogrid" module: (a) range pixel index at each grid point, (b) azimuth pixel index at each grid point, (c) range coarse displacement at each grid point, (d) azimuth coarse displacement at each grid point. Note: only the portion of the grid overlapping with the radar image pair has been extracted and shown.***
+***Output of "Geogrid" module: (a) range pixel index at each grid point, (b) azimuth pixel index at each grid point, (c) range pixel displacement at each grid point, (d) azimuth pixel displacement at each grid point. Note: only the portion of the grid overlapping with the radar image pair has been extracted and shown.***
 
 This is obtained by implementing the following command line:
 
@@ -65,7 +65,7 @@ Using the matrix of conversion coefficients, when fine pixel displacement are es
 
 <img src="figures/autorift2.png" width="100%">
 
-***Final motion velocity results by combining outputs from "Geogrid" and "autoRIFT" modules: (a) estimated motion velocity from Sentinel-1 data (x-direction; in m/yr), (b) coarse motion velocity from input data (x-direction; in m/yr), (c) estimated motion velocity from Sentinel-1 data (y-direction; in m/yr), (b) coarse motion velocity from input data (y-direction; in m/yr). Notes: all maps are established exactly over the same geographic-coordinate grid from input.***
+***Final motion velocity results by combining outputs from "Geogrid" and "autoRIFT" modules: (a) estimated motion velocity from Sentinel-1 data (x-direction; in m/yr), (b) motion velocity from input data (x-direction; in m/yr), (c) estimated motion velocity from Sentinel-1 data (y-direction; in m/yr), (d) motion velocity from input data (y-direction; in m/yr). Notes: all maps are established exactly over the same geographic-coordinate grid from input.***
 
 
 
@@ -73,13 +73,13 @@ _4.2 Optical Demo:_
 
 <img src="figures/optical_opt.png" width="50%">
 
-***Test area and dataset: optical image over Greenland (to the north of the Jakobshavn glacier) where the red rectangle marks boundary of the Landsat-8 image pair (20170708-20170724). Input files in this test scenario consist of the Digital Elevation Model (DEM), local surface slope maps (in both x- and y-direction) and coarse motion velocity maps (in both x- and y-direction) over the entire Greenland, where all maps share the same geographic-coordinate grid with 240-m spacing and spatial reference system with EPSG code 3413 (a.k.a WGS 84 / NSIDC Sea Ice Polar Stereographic North).***
+***Test area and dataset: optical image over Greenland (to the north of the Jakobshavn glacier) where the red rectangle marks boundary of the Landsat-8 image pair (20170708-20170724). Input files in this test scenario consist of the Digital Elevation Model (DEM), local surface slope maps (in both x- and y-direction) and motion velocity maps (in both x- and y-direction) over the entire Greenland, where all maps share the same geographic-coordinate grid with 240-m spacing and spatial reference system with EPSG code 3413 (a.k.a WGS 84 / NSIDC Sea Ice Polar Stereographic North).***
 
 
 
 <img src="figures/geogrid_opt.png" width="100%">
 
-***Output of "Geogrid" module: (a) horizontal pixel index at each grid point, (b) vertical pixel index at each grid point, (c) horizontal coarse displacement at each grid point, (d) vertical coarse displacement at each grid point. Note: only the portion of the grid overlapping with the optical image pair has been extracted and shown.***
+***Output of "Geogrid" module: (a) horizontal pixel index at each grid point, (b) vertical pixel index at each grid point, (c) horizontal pixel displacement at each grid point, (d) vertical pixel displacement at each grid point. Note: only the portion of the grid overlapping with the optical image pair has been extracted and shown.***
 
 This is obtained by implementing the following command line:
 
@@ -99,7 +99,7 @@ Using the matrix of conversion coefficients, when fine pixel displacement are es
 
 <img src="figures/autorift2_opt.png" width="100%">
 
-***Final motion velocity results by combining outputs from "Geogrid" and "autoRIFT" modules: (a) estimated motion velocity from Landsat-8 data (x-direction; in m/yr), (b) coarse motion velocity from input data (x-direction; in m/yr), (c) estimated motion velocity from Landsat-8 data (y-direction; in m/yr), (b) coarse motion velocity from input data (y-direction; in m/yr). Notes: all maps are established exactly over the same geographic-coordinate grid from input.***
+***Final motion velocity results by combining outputs from "Geogrid" and "autoRIFT" modules: (a) estimated motion velocity from Landsat-8 data (x-direction; in m/yr), (b) motion velocity from input data (x-direction; in m/yr), (c) estimated motion velocity from Landsat-8 data (y-direction; in m/yr), (d) motion velocity from input data (y-direction; in m/yr). Notes: all maps are established exactly over the same geographic-coordinate grid from input.***
 
 
 ## 6. Install
@@ -140,12 +140,12 @@ Using the matrix of conversion coefficients, when fine pixel displacement are es
 _Radar data:_
 * Refer to the file "testGeogrid_ISCE.py" (with ISCE) for the usage of the module and modify it for your own purpose
 * Input files include the master image folder (required), slave image folder (required), a DEM (required), local surface slope maps, velocity maps
-* Output files include 1) the range and azimuth pixel indices, 2) the range and azimuth coarse displacement, 3) the conversion coefficients from radar range and azimuth displacement to motion velocity in geographic x-coordinate, and 4) the conversion coefficients from radar range and azimuth displacement to motion velocity in geographic y-coordinate. 
+* Output files include 1) the range and azimuth pixel indices, 2) the range and azimuth pixel displacement, 3) the conversion coefficients from radar range and azimuth displacement to motion velocity in geographic x-coordinate, and 4) the conversion coefficients from radar range and azimuth displacement to motion velocity in geographic y-coordinate. 
 
 _Optical data:_
 * Refer to the file "testGeogrid_ISCE.py" (with ISCE) and "testGeogridOptical.py" (standalone) for the usage of the module and modify it for your own purpose
 * Input files include the image 1 (required), image 2 (required), a DEM (required), local surface slope maps, velocity maps
-* Output files include 1) the horizontal and vertical pixel indices, 2) the horizontal and vertical coarse displacement, 3) the conversion coefficients from horizontal and vertical displacement to motion velocity in geographic x-coordinate, and 4) the conversion coefficients from horizontal and vertical displacement to motion velocity in geographic y-coordinate. 
+* Output files include 1) the horizontal and vertical pixel indices, 2) the horizontal and vertical pixel displacement, 3) the conversion coefficients from horizontal and vertical displacement to motion velocity in geographic x-coordinate, and 4) the conversion coefficients from horizontal and vertical displacement to motion velocity in geographic y-coordinate. 
 
 _Note: among these, 1) will always be created, while 2-4) will be generated contingent upon that local surface slope and velocity maps are provided_
 
@@ -199,7 +199,7 @@ where "Geogrid()" is for radar data and "GeogridOptical()" for optical data.
        
        ------------------output file names------------------
        winlocname:          (output) file name for the pixel indices (at each grid point)
-       winoffname:          (output) file name of the coarse displacement (at each grid point)
+       winoffname:          (output) file name of the pixel displacement (at each grid point)
        winro2vxname:        (output) file name of the conversion coefficients from pixel displacement to motion velocity in geographic x-coordinate (at each grid point)
        winro2vyname:        (output) file name of the conversion coefficients from pixel displacement to motion velocity in geographic y-coordinate (at each grid point)
        Note: "winoffname", "winro2vxname" and "winro2vyname" will be created only when "dhdxname", "dhdyname", "vxname", and "vyname" are provided
