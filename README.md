@@ -139,13 +139,13 @@ Using the matrix of conversion coefficients, when fine pixel displacement are es
 
 _Radar data:_
 * Refer to the file "testGeogrid_ISCE.py" (with ISCE) for the usage of the module and modify it for your own purpose
-* Input files include the master image folder (required), slave image folder (required), a DEM (required), local surface slope maps, velocity maps
-* Output files include 1) the range and azimuth pixel indices, 2) the range and azimuth pixel displacement, 3) the conversion coefficients from radar range and azimuth displacement to motion velocity in geographic x-coordinate, and 4) the conversion coefficients from radar range and azimuth displacement to motion velocity in geographic y-coordinate. 
+* Input files include the master image folder (required), slave image folder (required), a DEM (required; in units of m), local surface slope maps, velocity maps (in units of m/yr)
+* Output files include 1) the range and azimuth pixel indices (in units of integer image pixels), 2) the range and azimuth pixel displacement (in units of integer image pixels), 3) the conversion coefficients from radar range and azimuth displacement to motion velocity in geographic x-coordinate, and 4) the conversion coefficients from radar range and azimuth displacement to motion velocity in geographic y-coordinate. 
 
 _Optical data:_
 * Refer to the file "testGeogrid_ISCE.py" (with ISCE) and "testGeogridOptical.py" (standalone) for the usage of the module and modify it for your own purpose
-* Input files include the image 1 (required), image 2 (required), a DEM (required), local surface slope maps, velocity maps
-* Output files include 1) the horizontal and vertical pixel indices, 2) the horizontal and vertical pixel displacement, 3) the conversion coefficients from horizontal and vertical displacement to motion velocity in geographic x-coordinate, and 4) the conversion coefficients from horizontal and vertical displacement to motion velocity in geographic y-coordinate. 
+* Input files include the image 1 (required), image 2 (required), a DEM (required; in units of m), local surface slope maps, velocity maps (in units of m/yr)
+* Output files include 1) the horizontal and vertical pixel indices (in units of integer image pixels), 2) the horizontal and vertical pixel displacement (in units of integer image pixels), 3) the conversion coefficients from horizontal and vertical displacement to motion velocity in geographic x-coordinate, and 4) the conversion coefficients from horizontal and vertical displacement to motion velocity in geographic y-coordinate. 
 
 _Note: among these, 1) will always be created, while 2-4) will be generated contingent upon that local surface slope and velocity maps are provided_
 
