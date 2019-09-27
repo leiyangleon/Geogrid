@@ -36,9 +36,9 @@ def cmdLineParse():
 
     parser = argparse.ArgumentParser(description='Output geo grid')
     parser.add_argument('-m', '--input_m', dest='indir_m', type=str, required=True,
-            help='Input folder with ISCE swath files for master image')
+            help='Input master image')
     parser.add_argument('-s', '--input_s', dest='indir_s', type=str, required=True,
-            help='Input folder with ISCE swath files for slave image')
+            help='Input slave image')
 #    parser.add_argument('-o', '--output', dest='outfile', type=str, default='geogrid.csv',
 #            help='Output grid mapping')
     parser.add_argument('-d', '--dem', dest='demfile', type=str, required=True,
