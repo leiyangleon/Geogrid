@@ -2,7 +2,7 @@
 
 **A Python module for precise mapping between (pixel index, pixel displacement) in imaging coordinates and (geolocation, motion velocity) in geographic coordinates**
 
-**Geogrid can be installed as a standalone Python module (does not support radar coordinates) or with the The InSAR Scientific Computing Environment (ISCE: https://github.com/isce-framework/isce2) software that supports handling Cartesian and radar coordinates**
+**Geogrid can be installed as a standalone Python module (does not support radar coordinates) or with the InSAR Scientific Computing Environment (ISCE: https://github.com/isce-framework/isce2) software that supports handling Cartesian and radar coordinates**
 
 **Geogrid can be used for dense feature tracking between two images over a grid defined in an arbitrary geographic-coordinate projection when used in combination with the sister autoRIFT Python module (https://github.com/leiyangleon/autoRIFT). Example applications include searching radar-coordinate imagery on a polar stereographic grid and searching Universal Transverse Mercator (UTM) imagery at specified geographic coordinates**
 
