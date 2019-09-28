@@ -1,10 +1,11 @@
 # Geogrid
 
-**Python module for precise mapping between (pixel index, pixel displacement) in imaging coordinates and (geolocation, motion velocity) in geographic coordinates**
+**A Python module for precise mapping between (pixel index, pixel displacement) in imaging coordinates and (geolocation, motion velocity) in geographic coordinates**
 
-**The current version can be installed with the ISCE (The InSAR Scientific Computing Environment; https://github.com/isce-framework/isce2) software (that supports both radar and optical images) or as a standalone Python module (only supports optical images)**
+**Geogrid can be installed as a standalone Python module (does not support radar coordinates) or with the The InSAR Scientific Computing Environment (ISCE: https://github.com/isce-framework/isce2) software that supports handling Cartesian and radar coordinates**
 
-**In combination with the Python module, autoRIFT (https://github.com/leiyangleon/autoRIFT), this module can be used to create feature tracking imagery (e.g. land ice motion velocity) over arbitrary geographic-coordinate grid (e.g. Digital Elevation Model)**
+**Geogrid can be used for dense feature tracking between two images over a grid defined in an arbitrary geographic-coordinate projection when used in combination with the sister autoRIFT Python module (https://github.com/leiyangleon/autoRIFT). Example applications include searching radar-coordinate imagery on a polar stereographic grid and searching Universal Transverse Mercator (UTM) imagery at specified geographic coordinates**
+
 
 
 Copyright (C) 2019 California Institute of Technology.  Government Sponsorship Acknowledged.
@@ -27,15 +28,15 @@ This effort was funded by the NASA MEaSUREs program in contribution to the Inter
 
 * user can define a grid in geographic coordinates provided in the form of a Digital Elevation Model (DEM) with arbitrary EPSG code, 
 * the program will extract the portion of the grid that overlaps with the given co-registered image pair, 
-* for radar images, use radar orbit information plus DEM along with GDAL coordinate transformation to precisely map the geolocation and the motion velocity (in geographic coordinates) at each grid point to the corresponding pixel index and pixel displacement (in imaging coordinates) in the radar image pair, where the imaging along-track and line-of-sight unit vectors are precisely derived at each grid point
-* for optical images, use map coordinate information of the optical image pair along with GDAL coordinate transformation to precisely map the geolocation and the motion velocity (in geographic coordinates) at each grid point to the corresponding pixel index and pixel displacement (in imaging coordinates) in the optical image pair, where the imaging horizontal- and vertical-direction unit vectors are precisely derived at each grid point
+* for radar-coordinate imagery, use radar orbit information plus DEM along with GDAL coordinate transformation to precisely map the geolocation and the motion velocity at each grid point (in geographic coordinates) to the corresponding pixel index and pixel displacement (in imaging coordinates), where the imaging along-track and line-of-sight unit vectors are precisely derived at each grid point
+* for Cartesian-coordinate imagery, use Cartesian coordinate information of the image pair along with GDAL coordinate transformation to precisely map the geolocation and the motion velocity at each grid point (in geographic coordinates) to the corresponding pixel index and pixel displacement (in imaging coordinates), where the imaging horizontal- and vertical-direction unit vectors are precisely derived at each grid point
 * the geographic z-direction motion velocity is estimated using the irrotational flow assumption as well as inputs from the geographic x- and y-direction motion velocity maps and the geographic x- and y-direction local surface slope maps
 * return the pixel indices in the image pair for each grid point
 * return the pixel displacement given the motion velocity maps and the local surface slope maps in the direction of both geographic x- and y-coordinates (they must be provided at the same grid as the DEM)
-* return the matrix of conversion coefficients that can convert the fine pixel displacement between the two images (estimated with the Python module "autoRIFT" https://github.com/leiyangleon/autoRIFT) to motion velocity in geographic x- and y-coordinates
-* the current version can be installed with the ISCE software (that supports both radar and optical images) or as a standalone Python module (only supports optical images)
-* in combination with the Python module, autoRIFT (https://github.com/leiyangleon/autoRIFT), this module can be used to create feature tracking imagery (e.g. land ice motion velocity) over arbitrary geographic-coordinate grid (e.g. Digital Elevation Model)
-* all outputs are in the format of GeoTIFF with the same EPSG code as input
+* return the matrix of conversion coefficients that can convert the fine pixel displacement between the two images (estimated with the autoRIFT Python module https://github.com/leiyangleon/autoRIFT) to motion velocity in geographic x- and y-coordinates
+* the current version can be installed with the ISCE software (that supports both radar and Cartesian coordinates) or as a standalone Python module (Cartesian coordinates only)
+* when used in combination with the autoRIFT Python module (https://github.com/leiyangleon/autoRIFT), Geogrid can be used for feature tracking between image pair over a grid defined in an arbitrary geographic-coordinate projection
+* outputs are returned in geocoded GeoTIFF image file format with the same EPSG projection code as input search grid
 
 ## 4. Demo
 
@@ -123,7 +124,7 @@ Using the matrix of conversion coefficients, when fine pixel displacement are es
 
 * Run "python3 setup.py install" or "sudo python3 setup.py install" (if the previous failed due to permission restriction) using command line
 * This distribution automatically installs the "Geogrid" module as well as the "autoRIFT" module (https://github.com/leiyangleon/autoRIFT)
-* The standalone version only supports optical images.
+* The standalone version only supports Cartesian coordinate imagery.
 * If the modules cannot be imported in Python environment, please make sure the path where these modules are installed (see "setup.py") to be added to the environmental variable $PYTHONPATH.
 
 
@@ -132,17 +133,17 @@ Using the matrix of conversion coefficients, when fine pixel displacement are es
 
 **Note:**
 
-* For radar data, it is recommended to run ISCE up to the step where co-registered SLC's are done, e.g. "mergebursts" for using topsApp.
-* For optical data, the optical images have to be co-registered with the same posting as well as the same x- and y-limits in map coordinates.
+* For radar-coordinate imagery, it is recommended to run ISCE up to the step where co-registered SLC's are done, e.g. "mergebursts" for using topsApp.
+* For Cartesian-coordinate imagery, the images have to be co-registered with the same posting as well as the same x- and y-limits in map coordinates.
 
 **For quick use:**
 
-_Radar data:_
+_Radar-coordinate Imagery:_
 * Refer to the file "testGeogrid_ISCE.py" (with ISCE) for the usage of the module and modify it for your own purpose
 * Input files include the master image folder (required), slave image folder (required), a DEM (required; in units of m), local surface slope maps (unitless), velocity maps (in units of m/yr)
 * Output files include 1) the range and azimuth pixel indices (in units of integer image pixels), 2) the range and azimuth pixel displacement (in units of integer image pixels), 3) the conversion coefficients from radar range and azimuth displacement to motion velocity in geographic x-coordinate, and 4) the conversion coefficients from radar range and azimuth displacement to motion velocity in geographic y-coordinate. 
 
-_Optical data:_
+_Cartesian-coordinate Imagery:_
 * Refer to the file "testGeogrid_ISCE.py" (with ISCE) and "testGeogridOptical.py" (standalone) for the usage of the module and modify it for your own purpose
 * Input files include the image 1 (required), image 2 (required), a DEM (required; in units of m), local surface slope maps (unitless), velocity maps (in units of m/yr)
 * Output files include 1) the horizontal and vertical pixel indices (in units of integer image pixels), 2) the horizontal and vertical pixel displacement (in units of integer image pixels), 3) the conversion coefficients from horizontal and vertical displacement to motion velocity in geographic x-coordinate, and 4) the conversion coefficients from horizontal and vertical displacement to motion velocity in geographic y-coordinate. 
@@ -165,12 +166,12 @@ _Standalone:_
        import GeogridOptical as GO
        obj = GO.GeogridOptical()
 
-where "Geogrid()" is for radar data and "GeogridOptical()" for optical data.
+where "Geogrid()" is for radar-coordinate imagery and "GeogridOptical()" for Cartesian-coordinate imagery.
 
 
 * The "Geogrid" object has several parameters that have to be set up (listed below; can also be obtained by referring to "testGeogrid_ISCE.py"): 
 
-       ------------------radar parameters (for radar only)------------------
+       ------------------radar-coordinate imagery parameters (for radar only)------------------
        startingRange:       starting range
        rangePixelSize:      range pixel size
        sensingStart:        starting azimuth time
@@ -181,7 +182,7 @@ where "Geogrid()" is for radar data and "GeogridOptical()" for optical data.
        numberOfSamples:     number of samples (in range)
        orbit:               ISCE orbit data structure
        
-       ------------------optical parameters (for optical only)------------------
+       ------------------Cartesian-coordinate imagery parameters (for Cartesian only)------------------
        startingX:           starting coordinate in x direction
        startingY:           starting coordinate in y direction
        XSize:               resolution in x direction
@@ -208,4 +209,4 @@ where "Geogrid()" is for radar data and "GeogridOptical()" for optical data.
 
        obj.geogrid() or obj.runGeogrid()
 
-where "obj.geogrid()" is for radar data, and "obj.runGeogrid()" for optical data.
+where "obj.geogrid()" is for radar-coordinate imagery, and "obj.runGeogrid()" for Cartesian-coordinate imagery.
