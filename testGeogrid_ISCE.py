@@ -168,6 +168,7 @@ def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy):
 
     import isce
     from components.contrib.geo_autoRIFT.geogrid import Geogrid
+#     from geogrid import Geogrid
 
     obj = Geogrid()
     obj.configure()
@@ -199,10 +200,10 @@ def runGeogridOptical(info, info1, dem, dhdx, dhdy, vx, vy):
     '''
         Wire and run geogrid.
         '''
-    #    import GeogridOptical as GO
+
     from components.contrib.geo_autoRIFT.geogrid import GeogridOptical
+#    from geogrid import GeogridOptical
     
-    #    obj = GO.GeogridOptical()
     obj = GeogridOptical()
     
     obj.startingX = info.startingX
