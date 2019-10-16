@@ -133,9 +133,7 @@ Using the matrix of conversion coefficients, when fine pixel displacement are es
 ***2) Conda Install:***
 
 * The source code "geo_autoRIFT" folder can also be installed via conda-forge channels. Please follow the instructions on the following page:
-
     https://github.com/conda-forge/autorift-feedstock
-
 * This distribution automatically installs the "Geogrid" module as well as the "autoRIFT" module (https://github.com/leiyangleon/autoRIFT)
 * The standalone version only supports Cartesian coordinate imagery. However, if the above "With ISCE" version is installed independently, the standalone version can also support radar coordinate imagery.
 * If the modules cannot be imported in Python environment, please make sure the path where these modules are installed (search for the modules in "anaconda3" directory) to be added to the environmental variable $PYTHONPATH.
@@ -180,8 +178,8 @@ _With ISCE:_
 
 _Standalone:_
 
-       import GeogridOptical as GO
-       obj = GO.GeogridOptical()
+       from geogrid import GeogridOptical
+       obj = GeogridOptical()
 
 where "Geogrid()" is for radar-coordinate imagery and "GeogridOptical()" for Cartesian-coordinate imagery.
 
