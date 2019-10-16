@@ -134,7 +134,7 @@ Using the matrix of conversion coefficients, when fine pixel displacement are es
 
 * The source code "geo_autoRIFT" folder can also be installed via conda-forge channels. Please follow the instructions on the following page:
 
-https://github.com/conda-forge/autorift-feedstock
+    https://github.com/conda-forge/autorift-feedstock
 
 * This distribution automatically installs the "Geogrid" module as well as the "autoRIFT" module (https://github.com/leiyangleon/autoRIFT)
 * The standalone version only supports Cartesian coordinate imagery. However, if the above "With ISCE" version is installed independently, the standalone version can also support radar coordinate imagery.
