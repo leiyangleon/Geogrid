@@ -5,7 +5,6 @@
 #    return PySplitRangeSpectrum()
 
 
-
 from .GeogridOptical import GeogridOptical
 
 try:
