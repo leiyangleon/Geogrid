@@ -116,7 +116,7 @@ Please refer to the installation guide of autoRIFT repository (https://github.co
 
 * For radar-coordinate imagery, it is recommended to run ISCE up to the step where co-registered SLC's are done, e.g. "mergebursts" for using topsApp.
 * For Cartesian-coordinate imagery, the images have to be co-registered with the same posting as well as the same x- and y-limits in map coordinates.
-* The input DEM grid along with the auxilliary slope and velocity files have to be in the geographic Cartesian coordinate projection (with geographic x, y coordinates defined as distances in units of m); the geographic coordinate system (with latitude and longitude) is not supported. Users are recommended to do the GDAL coordinate transformation themselves before using the current version of the Geogrid module.
+* The input DEM grid along with the auxilliary slope and velocity files have to be in the geographic Cartesian coordinate projection (with geographic x, y coordinates or easting, northing defined as distances in units of m); the geographic coordinate system (with latitude and longitude) is not supported. Users are recommended to do the GDAL coordinate transformation themselves before using the current version of the Geogrid module.
 
 
 
