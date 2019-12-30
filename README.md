@@ -188,7 +188,7 @@ where "Geogrid()" is for radar-coordinate imagery and "GeogridOptical()" for Car
        winro2vxname:        (output) file name of the conversion coefficients from pixel displacement to motion velocity in geographic x-coordinate (at each grid point)
        winro2vyname:        (output) file name of the conversion coefficients from pixel displacement to motion velocity in geographic y-coordinate (at each grid point)
        
-       Note: all four outputs of "winlocname", "winoffname", "winro2vxname" and "winro2vyname" will be created. However, when "dhdxname" and "dhdyname" are not provided, "winoffname", "winro2vxname" and "winro2vyname" will be nodata everywhere; when "vxname", and "vyname" are not provided, "winoffname" will be nodata everywhere. 
+       Note: all four outputs of "winlocname", "winoffname", "winro2vxname" and "winro2vyname" will be created. However, when "dhdxname" and "dhdyname" are not provided, "winoffname", "winro2vxname" and "winro2vyname" will be nodata everywhere; when "vxname", and "vyname" are not provided, "winoffname" will be nodata everywhere; only when all four unrequired inputs are provided, these four outputs have meaningful values.
 
 * After the above parameters are set, run the module as below to create the output files
 
