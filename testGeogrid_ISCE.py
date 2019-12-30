@@ -181,6 +181,7 @@ def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy):
     obj.repeatTime = (info1.sensingStart - info.sensingStart).total_seconds()
     obj.numberOfLines = info.numberOfLines
     obj.numberOfSamples = info.numberOfSamples
+    obj.nodata_out = -32767
     obj.orbit = info.orbit
     obj.demname = dem
     obj.dhdxname = dhdx
@@ -213,6 +214,7 @@ def runGeogridOptical(info, info1, dem, dhdx, dhdy, vx, vy):
     obj.repeatTime = (info1.time - info.time) * 24.0 * 3600.0
     obj.numberOfLines = info.numberOfLines
     obj.numberOfSamples = info.numberOfSamples
+    obj.nodata_out = -32767
     
     obj.dat1name = info.filename
     obj.demname = dem
