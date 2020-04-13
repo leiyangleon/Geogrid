@@ -37,6 +37,7 @@ This effort was funded by the NASA MEaSUREs program in contribution to the Inter
 * the current version can be installed with the ISCE software (that supports both radar and Cartesian coordinates) or as a standalone Python module (Cartesian coordinates only)
 * when used in combination with the autoRIFT Python module (https://github.com/leiyangleon/autoRIFT), Geogrid can be used for feature tracking between image pair over a grid defined in an arbitrary geographic Cartesian (northing/easting) coordinate projection
 * outputs are returned in geocoded GeoTIFF image file format with the same EPSG projection code as input search grid
+* spatially varying input maps of velocity search range (in units of m/yr), chip size minimum and maximum (in units of m), stable surface mask (boolean) can be handled, with corresponding output (in units of integer image pixels) returned at each grid point.
 
 ## 4. Demo
 
