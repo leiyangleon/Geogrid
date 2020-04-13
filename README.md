@@ -175,20 +175,37 @@ where "Geogrid()" is for radar-coordinate imagery and "GeogridOptical()" for Car
        numberOfLines:       number of lines (in y direction)
        numberOfSamples:     number of samples (in x direction)
        
+       ------------------MISC------------------
+       nodata_out:          nodata value in the output
+       chipSizeX0:          Smallest chip size allowed (in m); only required when the chip size minimum and maximum are provided.
+       
        ------------------input file names------------------
        demname:             (input; required) file name of the DEM
        dhdxname:            (input; not required) file name of the local surface slope in geographic x- (easting) coodinate
        dhdyname:            (input; not required) file name of the local surface slope in geographic y- (northing) coodinate
        vxname:              (input; not required) file name of the motion velocity in geographic x- (easting) coodinate
        vyname:              (input; not required) file name of the motion velocity in geographic y- (northing) coodinate
+       srxname:             (input; not required) file name of the velocity search range in geographic x- (easting) coodinate
+       sryname:             (input; not required) file name of the velocity search range in geographic y- (northing) coodinate
+       csminxname:          (input; not required) file name of the chip size minimum (in m) in geographic x- (easting) coodinate
+       csminyname:          (input; not required) file name of the chip size minimum (in m) in geographic y- (northing) coodinate
+       csmaxxname:          (input; not required) file name of the chip size maximum (in m) in geographic x- (easting) coodinate
+       csmaxyname:          (input; not required) file name of the chip size maximum (in m) in geographic y- (northing) coodinate
+       ssmname:             (input; not required) file name of the stable surface mask
+       
        
        ------------------output file names------------------
-       winlocname:          (output) file name for the pixel indices (at each grid point)
-       winoffname:          (output) file name of the pixel displacement (at each grid point)
-       winro2vxname:        (output) file name of the conversion coefficients from pixel displacement to motion velocity in geographic x-coordinate (at each grid point)
-       winro2vyname:        (output) file name of the conversion coefficients from pixel displacement to motion velocity in geographic y-coordinate (at each grid point)
+       winlocname:          (output) file name for the two-band pixel indices (at each grid point)
+       winoffname:          (output) file name of the two-band pixel displacement (at each grid point)
+       winsrname:           (output) file name of the two-band pixel search range (at each grid point)
+       wincsminname:        (output) file name of the two-band chip size minimum in pixels (at each grid point)
+       wincsmaxname:        (output) file name of the two-band chip size maximum in pixels (at each grid point)
+       winssmname:          (output) file name of the stable surface mask (at each grid point)
+       winro2vxname:        (output) file name of the two-band conversion coefficients from pixel displacement to motion velocity in geographic x-coordinate (at each grid point)
+       winro2vyname:        (output) file name of the two-band conversion coefficients from pixel displacement to motion velocity in geographic y-coordinate (at each grid point)
        
-       Note: all four outputs of "winlocname", "winoffname", "winro2vxname" and "winro2vyname" will be created. However, when "dhdxname" and "dhdyname" are not provided, "winoffname", "winro2vxname" and "winro2vyname" will be nodata everywhere; when "vxname", and "vyname" are not provided, "winoffname" will be nodata everywhere; only when all four unrequired inputs are provided, these four outputs have meaningful values.
+       
+       Note: all the above outputs will be created. However, when "dhdxname" and "dhdyname" are not provided, "winoffname", "winro2vxname" and "winro2vyname" will be nodata everywhere; when "vxname", and "vyname" are not provided, "winoffname" will be nodata everywhere; only when all of "dhdxname", "dhdyname", "vxname", and "vyname" are provided, these four outputs ("winlocname", "winoffname", "winro2vxname" and "winro2vyname") have meaningful values. In addition, "winsrname" is meaningful when "srname" is provided; "wincsminname" is meaningul when "csminxname" and "csminyname" are provided; "wincsmaxname" is meaningul when "csmaxxname" and "csmaxyname" are provided; "winssmname" is meaningful when "ssmname" is provided. Otherwise, there will be nodata values as assigned by "nodata_out" everywhere in the outputs.
 
 * After the above parameters are set, run the module as below to create the output files
 
