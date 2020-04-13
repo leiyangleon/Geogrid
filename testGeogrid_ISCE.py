@@ -51,6 +51,20 @@ def cmdLineParse():
             help='Input velocity in X')
     parser.add_argument('-vy', '--vy', dest='vyfile', type=str, default="",
             help='Input velocity in Y')
+    parser.add_argument('-srx', '--srx', dest='srxfile', type=str, default="",
+            help='Input search range in X')
+    parser.add_argument('-sry', '--sry', dest='sryfile', type=str, default="",
+            help='Input search range in Y')
+    parser.add_argument('-csminx', '--csminx', dest='csminxfile', type=str, default="",
+            help='Input chip size min in X')
+    parser.add_argument('-csminy', '--csminy', dest='csminyfile', type=str, default="",
+            help='Input chip size min in Y')
+    parser.add_argument('-csmaxx', '--csmaxx', dest='csmaxxfile', type=str, default="",
+            help='Input chip size max in X')
+    parser.add_argument('-csmaxy', '--csmaxy', dest='csmaxyfile', type=str, default="",
+            help='Input chip size max in Y')
+    parser.add_argument('-ssm', '--ssm', dest='ssmfile', type=str, default="",
+            help='Input stable surface mask')
     parser.add_argument('-fo', '--flag_optical', dest='optical_flag', type=bool, required=False, default=0,
             help='flag for reading optical data (e.g. Landsat): use 1 for on and 0 (default) for off')
 
@@ -161,7 +175,7 @@ def loadMetadataOptical(indir):
 
 
 
-def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy):
+def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, csmaxx, csmaxy, ssm):
     '''
     Wire and run geogrid.
     '''
@@ -182,22 +196,35 @@ def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy):
     obj.numberOfLines = info.numberOfLines
     obj.numberOfSamples = info.numberOfSamples
     obj.nodata_out = -32767
+    obj.chipSizeX0 = 240
     obj.orbit = info.orbit
     obj.demname = dem
     obj.dhdxname = dhdx
     obj.dhdyname = dhdy
     obj.vxname = vx
     obj.vyname = vy
+    obj.srxname = srx
+    obj.sryname = sry
+    obj.csminxname = csminx
+    obj.csminyname = csminy
+    obj.csmaxxname = csmaxx
+    obj.csmaxyname = csmaxy
+    obj.ssmname = ssm
     obj.winlocname = "window_location.tif"
     obj.winoffname = "window_offset.tif"
+    obj.winsrname = "window_search_range.tif"
+    obj.wincsminname = "window_chip_size_min.tif"
+    obj.wincsmaxname = "window_chip_size_max.tif"
+    obj.winssmname = "window_stable_surface_mask.tif"
     obj.winro2vxname = "window_rdr_off2vel_x_vec.tif"
     obj.winro2vyname = "window_rdr_off2vel_y_vec.tif"
-
+    
+    obj.getIncidenceAngle()
     obj.geogrid()
 
 
 
-def runGeogridOptical(info, info1, dem, dhdx, dhdy, vx, vy):
+def runGeogridOptical(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, csmaxx, csmaxy, ssm):
     '''
         Wire and run geogrid.
         '''
@@ -215,6 +242,7 @@ def runGeogridOptical(info, info1, dem, dhdx, dhdy, vx, vy):
     obj.numberOfLines = info.numberOfLines
     obj.numberOfSamples = info.numberOfSamples
     obj.nodata_out = -32767
+    obj.chipSizeX0 = 240
     
     obj.dat1name = info.filename
     obj.demname = dem
@@ -222,8 +250,19 @@ def runGeogridOptical(info, info1, dem, dhdx, dhdy, vx, vy):
     obj.dhdyname = dhdy
     obj.vxname = vx
     obj.vyname = vy
+    obj.srxname = srx
+    obj.sryname = sry
+    obj.csminxname = csminx
+    obj.csminyname = csminy
+    obj.csmaxxname = csmaxx
+    obj.csmaxyname = csmaxy
+    obj.ssmname = ssm
     obj.winlocname = "window_location.tif"
     obj.winoffname = "window_offset.tif"
+    obj.winsrname = "window_search_range.tif"
+    obj.wincsminname = "window_chip_size_min.tif"
+    obj.wincsmaxname = "window_chip_size_max.tif"
+    obj.winssmname = "window_stable_surface_mask.tif"
     obj.winro2vxname = "window_rdr_off2vel_x_vec.tif"
     obj.winro2vyname = "window_rdr_off2vel_y_vec.tif"
     
@@ -241,11 +280,11 @@ if __name__ == '__main__':
     if inps.optical_flag == 1:
         metadata_m = loadMetadataOptical(inps.indir_m)
         metadata_s = loadMetadataOptical(inps.indir_s)
-        runGeogridOptical(metadata_m, metadata_s, inps.demfile, inps.dhdxfile, inps.dhdyfile, inps.vxfile, inps.vyfile)
+        runGeogridOptical(metadata_m, metadata_s, inps.demfile, inps.dhdxfile, inps.dhdyfile, inps.vxfile, inps.vyfile, inps.srxfile, inps.sryfile, inps.csminxfile, inps.csminyfile, inps.csmaxxfile, inps.csmaxyfile, inps.ssmfile)
     else:
         metadata_m = loadMetadata(inps.indir_m)
         metadata_s = loadMetadata(inps.indir_s)
-        runGeogrid(metadata_m, metadata_s, inps.demfile, inps.dhdxfile, inps.dhdyfile, inps.vxfile, inps.vyfile)
+        runGeogrid(metadata_m, metadata_s, inps.demfile, inps.dhdxfile, inps.dhdyfile, inps.vxfile, inps.vyfile, inps.srxfile, inps.sryfile, inps.csminxfile, inps.csminyfile, inps.csmaxxfile, inps.csmaxyfile, inps.ssmfile)
     
 
 
