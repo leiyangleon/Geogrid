@@ -38,6 +38,7 @@ This effort was funded by the NASA MEaSUREs program in contribution to the Inter
 * when used in combination with the autoRIFT Python module (https://github.com/leiyangleon/autoRIFT), Geogrid can be used for feature tracking between image pair over a grid defined in an arbitrary geographic Cartesian (northing/easting) coordinate projection
 * outputs are returned in geocoded GeoTIFF image file format with the same EPSG projection code as input search grid
 * spatially varying input maps of velocity search range (in units of m/yr), chip size minimum and maximum (in units of m), stable surface mask (boolean) can be handled, with corresponding output (in units of integer image pixels) returned at each grid point.
+* **[NEW]** the program now supports fetching optical images (Landsat-8 GeoTIFF and Sentinel-2 COG formats are included) as well as other inputs (e.g. DEM, slope, etc; all in GeoTIFF format) from either local machine or URL links. See the changes on the autoRIFT [commands](https://github.com/leiyangleon/autoRIFT). When using the Geogrid commands below, users need to append a url flag: "-urlflag 1" for using URL links and performing coregistration, "-urlflag 0" for using files on local machine and performing coregistration. If the flag is not specified (default), it will behave the same as previous versions, i.e. using files on local machine without coregistration (assuming they are already coregistered).
 
 ## 4. Demo
 
