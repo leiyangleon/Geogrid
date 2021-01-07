@@ -193,7 +193,7 @@ def coregisterLoadMetadataOptical(indir_m, indir_s, urlflag):
     
     x1a, y1a, xsize1, ysize1, x2a, y2a, xsize2, ysize2, trans = obj.coregister(indir_m, indir_s, urlflag)
     
-    if urlflag is 1:
+    if urlflag == 1:
         DS = gdal.Open('/vsicurl/%s' %(indir_m))
     else:
         DS = gdal.Open(indir_m, gdal.GA_ReadOnly)
@@ -217,7 +217,7 @@ def coregisterLoadMetadataOptical(indir_m, indir_s, urlflag):
     
     info.filename = indir_m
 
-    if urlflag is 1:
+    if urlflag == 1:
         DS1 = gdal.Open('/vsicurl/%s' %(indir_s))
     else:
         DS1 = gdal.Open(indir_s, gdal.GA_ReadOnly)
@@ -235,7 +235,7 @@ def coregisterLoadMetadataOptical(indir_m, indir_s, urlflag):
     return info, info1
 
 
-def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, csmaxx, csmaxy, ssm):
+def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, csmaxx, csmaxy, ssm, urlflag):
     '''
     Wire and run geogrid.
     '''
@@ -256,6 +256,7 @@ def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, c
     obj.numberOfLines = info.numberOfLines
     obj.numberOfSamples = info.numberOfSamples
     obj.nodata_out = -32767
+    obj.urlflag = urlflag
     obj.chipSizeX0 = 240
     obj.orbit = info.orbit
     obj.demname = dem
@@ -354,7 +355,7 @@ if __name__ == '__main__':
     else:
         metadata_m = loadMetadata(inps.indir_m)
         metadata_s = loadMetadata(inps.indir_s)
-        runGeogrid(metadata_m, metadata_s, inps.demfile, inps.dhdxfile, inps.dhdyfile, inps.vxfile, inps.vyfile, inps.srxfile, inps.sryfile, inps.csminxfile, inps.csminyfile, inps.csmaxxfile, inps.csmaxyfile, inps.ssmfile)
+        runGeogrid(metadata_m, metadata_s, inps.demfile, inps.dhdxfile, inps.dhdyfile, inps.vxfile, inps.vyfile, inps.srxfile, inps.sryfile, inps.csminxfile, inps.csminyfile, inps.csmaxxfile, inps.csmaxyfile, inps.ssmfile, inps.urlflag)
     
 
 
