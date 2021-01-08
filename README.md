@@ -38,7 +38,7 @@ This effort was funded by the NASA MEaSUREs program in contribution to the Inter
 * when used in combination with the autoRIFT Python module (https://github.com/leiyangleon/autoRIFT), Geogrid can be used for feature tracking between image pair over a grid defined in an arbitrary geographic Cartesian (northing/easting) coordinate projection
 * outputs are returned in geocoded GeoTIFF image file format with the same EPSG projection code as input search grid
 * spatially varying input maps of velocity search range (in units of m/yr), chip size minimum and maximum (in units of m), stable surface mask (boolean) can be handled, with corresponding output (in units of integer image pixels) returned at each grid point.
-* **[NEW]** the program now supports fetching optical images (Landsat-8 GeoTIFF and Sentinel-2 COG formats are included) as well as other inputs (e.g. DEM, slope, etc; all in GeoTIFF format) from either local machine or URL links. See the changes on the autoRIFT [commands](https://github.com/leiyangleon/autoRIFT). When using the Geogrid commands below, users need to append a url flag: "-urlflag 1" for using URL links and performing coregistration, "-urlflag 0" for using files on local machine and performing coregistration. If the flag is not specified (default), it will behave the same as previous versions, i.e. using files on local machine without coregistration (assuming they are already coregistered).
+* **[NEW]** For feature tracking of optical images, the program now supports fetching optical images (Landsat-8 GeoTIFF and Sentinel-2 COG formats are included) as well as other inputs (e.g. DEM, slope, etc; all in GeoTIFF format) from either local machine or URL links. See the changes on the autoRIFT [commands](https://github.com/leiyangleon/autoRIFT). When using the Geogrid commands below, users need to append a url flag: "-urlflag 1" for using URL links and performing coregistration, "-urlflag 0" for using files on local machine and performing coregistration. If the flag is not specified (default), it will behave the same as previous versions, i.e. using files on local machine without coregistration (assuming they are already coregistered). For feature tracking of radar images, the program also supports fetching auxilliary inputs (e.g. DEM, slope, etc; all in GeoTIFF format) from either local machine or URL links, i.e. "-urlflag 1" for using URLs and not specified (default) for local files.
 
 ## 4. Demo
 
@@ -58,7 +58,7 @@ This is obtained by implementing the following command line:
 
 With ISCE:
 
-       testGeogrid_ISCE.py -m master_image_folder -s slave_image_folder -d demname -sx dhdxname -sy dhdyname -vx vxname -vy vyname -srx srxname -sry sryname -csminx csminxname -csminy csminyname -csmaxx csmaxxname -csmaxy csmaxyname -ssm ssmname 
+       testGeogrid_ISCE.py -m master_image_folder -s slave_image_folder -d demname -sx dhdxname -sy dhdyname -vx vxname -vy vyname -srx srxname -sry sryname -csminx csminxname -csminy csminyname -csmaxx csmaxxname -csmaxy csmaxyname -ssm ssmname
 
 where "master_image_folder" and "slave_image_folder" are the folders storing master and slave image information (e.g. radar parameters), and "demname", "dhdxname", "dhdyname", "vxname", "vyname", "srxname", "sryname", "csminxname", "csminyname", "csmaxxname", "csmaxyname" and "ssmname" are defined below in the instructions.
 
