@@ -217,7 +217,7 @@ def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, c
     obj.runGeogrid()
 
 
-if __name__ == '__main__':
+def main():
     '''
     Main driver.
     '''
@@ -227,3 +227,7 @@ if __name__ == '__main__':
     metadata_m, metadata_s = coregisterLoadMetadata(inps.indir_m, inps.indir_s)
 
     runGeogrid(metadata_m, metadata_s, inps.demfile, inps.dhdxfile, inps.dhdyfile, inps.vxfile, inps.vyfile, inps.srxfile, inps.sryfile, inps.csminxfile, inps.csminyfile, inps.csmaxxfile, inps.csmaxyfile, inps.ssmfile)
+
+
+if __name__ == '__main__':
+    main()
