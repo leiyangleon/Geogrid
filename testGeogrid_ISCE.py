@@ -67,8 +67,6 @@ def cmdLineParse():
             help='Input stable surface mask')
     parser.add_argument('-fo', '--flag_optical', dest='optical_flag', type=bool, required=False, default=0,
             help='flag for reading optical data (e.g. Landsat): use 1 for on and 0 (default) for off')
-    parser.add_argument('-urlflag', '--urlflag', dest='urlflag', type=int, required=False,
-            help='flag for reading and coregistering optical data (GeoTIFF images, e.g. Landsat): use 1 for url read and 0 for local machine read; if not specified (i.e. None; default), will just read from local machine without coregistration')
 
     return parser.parse_args()
 
@@ -175,7 +173,7 @@ def loadMetadataOptical(indir):
     return info
 
 
-def coregisterLoadMetadataOptical(indir_m, indir_s, urlflag):
+def coregisterLoadMetadataOptical(indir_m, indir_s):
     '''
         Input file.
         '''
@@ -190,14 +188,11 @@ def coregisterLoadMetadataOptical(indir_m, indir_s, urlflag):
 #    from geogrid import GeogridOptical
 
     obj = GeogridOptical()
-    
-    x1a, y1a, xsize1, ysize1, x2a, y2a, xsize2, ysize2, trans = obj.coregister(indir_m, indir_s, urlflag)
-    
-    if urlflag == 1:
-        DS = gdal.Open('/vsicurl/%s' %(indir_m))
-    else:
-        DS = gdal.Open(indir_m, gdal.GA_ReadOnly)
-    
+
+    x1a, y1a, xsize1, ysize1, x2a, y2a, xsize2, ysize2, trans = obj.coregister(indir_m, indir_s)
+
+    DS = gdal.Open(indir_m, gdal.GA_ReadOnly)
+
     info = Dummy()
     info.startingX = trans[0]
     info.startingY = trans[3]
@@ -217,10 +212,7 @@ def coregisterLoadMetadataOptical(indir_m, indir_s, urlflag):
     
     info.filename = indir_m
 
-    if urlflag == 1:
-        DS1 = gdal.Open('/vsicurl/%s' %(indir_s))
-    else:
-        DS1 = gdal.Open(indir_s, gdal.GA_ReadOnly)
+    DS1 = gdal.Open(indir_s, gdal.GA_ReadOnly)
 
     info1 = Dummy()
 
@@ -235,7 +227,7 @@ def coregisterLoadMetadataOptical(indir_m, indir_s, urlflag):
     return info, info1
 
 
-def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, csmaxx, csmaxy, ssm, urlflag):
+def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, csmaxx, csmaxy, ssm):
     '''
     Wire and run geogrid.
     '''
@@ -256,7 +248,6 @@ def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, c
     obj.numberOfLines = info.numberOfLines
     obj.numberOfSamples = info.numberOfSamples
     obj.nodata_out = -32767
-    obj.urlflag = urlflag
     obj.chipSizeX0 = 240
     obj.orbit = info.orbit
     obj.demname = dem
@@ -285,7 +276,7 @@ def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, c
 
 
 
-def runGeogridOptical(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, csmaxx, csmaxy, ssm, urlflag):
+def runGeogridOptical(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, csmaxx, csmaxy, ssm):
     '''
     Wire and run geogrid.
     '''
@@ -310,8 +301,7 @@ def runGeogridOptical(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, cs
     obj.numberOfSamples = info.numberOfSamples
     obj.nodata_out = -32767
     obj.chipSizeX0 = 240
-    
-    obj.urlflag = urlflag
+
     obj.dat1name = info.filename
     obj.demname = dem
     obj.dhdxname = dhdx
@@ -346,16 +336,12 @@ if __name__ == '__main__':
     inps = cmdLineParse()
     
     if inps.optical_flag == 1:
-        if inps.urlflag is not None:
-            metadata_m, metadata_s = coregisterLoadMetadataOptical(inps.indir_m, inps.indir_s, inps.urlflag)
-        else:
-            metadata_m = loadMetadataOptical(inps.indir_m)
-            metadata_s = loadMetadataOptical(inps.indir_s)
-        runGeogridOptical(metadata_m, metadata_s, inps.demfile, inps.dhdxfile, inps.dhdyfile, inps.vxfile, inps.vyfile, inps.srxfile, inps.sryfile, inps.csminxfile, inps.csminyfile, inps.csmaxxfile, inps.csmaxyfile, inps.ssmfile, inps.urlflag)
+        metadata_m, metadata_s = coregisterLoadMetadataOptical(inps.indir_m, inps.indir_s)
+        runGeogridOptical(metadata_m, metadata_s, inps.demfile, inps.dhdxfile, inps.dhdyfile, inps.vxfile, inps.vyfile, inps.srxfile, inps.sryfile, inps.csminxfile, inps.csminyfile, inps.csmaxxfile, inps.csmaxyfile, inps.ssmfile)
     else:
         metadata_m = loadMetadata(inps.indir_m)
         metadata_s = loadMetadata(inps.indir_s)
-        runGeogrid(metadata_m, metadata_s, inps.demfile, inps.dhdxfile, inps.dhdyfile, inps.vxfile, inps.vyfile, inps.srxfile, inps.sryfile, inps.csminxfile, inps.csminyfile, inps.csmaxxfile, inps.csmaxyfile, inps.ssmfile, inps.urlflag)
-    
+        runGeogrid(metadata_m, metadata_s, inps.demfile, inps.dhdxfile, inps.dhdyfile, inps.vxfile, inps.vyfile, inps.srxfile, inps.sryfile, inps.csminxfile, inps.csminyfile, inps.csmaxxfile, inps.csmaxyfile, inps.ssmfile)
+
 
 
