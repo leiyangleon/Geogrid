@@ -202,7 +202,7 @@ def coregisterLoadMetadataOptical(indir_m, indir_s):
     if re.findall("L.08_",DS.GetDescription()).__len__() > 0:
         nameString = os.path.basename(DS.GetDescription())
         info.time = nameString.split('_')[3]
-    elif re.findall("S2",DS.GetDescription()).__len__() > 0:
+    elif re.findall("S2._",DS.GetDescription()).__len__() > 0:
         info.time = DS.GetDescription().split('_')[2]
     else:
         raise Exception('Optical data NOT supported yet!')
@@ -219,7 +219,7 @@ def coregisterLoadMetadataOptical(indir_m, indir_s):
     if re.findall("L.08_",DS1.GetDescription()).__len__() > 0:
         nameString1 = os.path.basename(DS1.GetDescription())
         info1.time = nameString1.split('_')[3]
-    elif re.findall("S2",DS1.GetDescription()).__len__() > 0:
+    elif re.findall("S2._",DS1.GetDescription()).__len__() > 0:
         info1.time = DS1.GetDescription().split('_')[2]
     else:
         raise Exception('Optical data NOT supported yet!')
