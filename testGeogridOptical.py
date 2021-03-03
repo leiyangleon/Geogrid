@@ -174,6 +174,9 @@ def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, c
     from geogrid import GeogridOptical
 #    from components.contrib.geo_autoRIFT.geogrid import GeogridOptical
 
+    from osgeo import gdal
+    dem_info = gdal.Info(dem, format='json')
+
     obj = GeogridOptical()
 
     obj.startingX = info.startingX
@@ -190,7 +193,7 @@ def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, c
     obj.numberOfLines = info.numberOfLines
     obj.numberOfSamples = info.numberOfSamples
     obj.nodata_out = -32767
-    obj.chipSizeX0 = 240
+    obj.chipSizeX0 = dem_info['geoTransform'][1]
 
     obj.dat1name = info.filename
     obj.demname = dem
