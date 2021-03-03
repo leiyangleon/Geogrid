@@ -148,28 +148,28 @@ def loadMetadataOptical(indir):
         '''
     import os
     import numpy as np
-    
+
     from osgeo import gdal, osr
     import struct
-    
+
     DS = gdal.Open(indir, gdal.GA_ReadOnly)
     trans = DS.GetGeoTransform()
-    
+
     info = Dummy()
     info.startingX = trans[0]
     info.startingY = trans[3]
     info.XSize = trans[1]
     info.YSize = trans[5]
-    
+
     nameString = os.path.basename(DS.GetDescription())
     info.time = nameString.split('_')[3]
-    
+
     info.numberOfLines = DS.RasterYSize
     info.numberOfSamples = DS.RasterXSize
-    
+
     info.filename = indir
-    
-    
+
+
     return info
 
 
@@ -179,11 +179,11 @@ def coregisterLoadMetadataOptical(indir_m, indir_s):
         '''
     import os
     import numpy as np
-    
+
     from osgeo import gdal, osr
     import struct
     import re
-    
+
     from components.contrib.geo_autoRIFT.geogrid import GeogridOptical
 #    from geogrid import GeogridOptical
 
@@ -202,14 +202,14 @@ def coregisterLoadMetadataOptical(indir_m, indir_s):
     if re.findall("L[CO]08_",DS.GetDescription()).__len__() > 0:
         nameString = os.path.basename(DS.GetDescription())
         info.time = nameString.split('_')[3]
-    elif re.findall("S2._",DS.GetDescription()).__len__() > 0:
+    elif re.findall("s2-l1c",DS.GetDescription()).__len__() > 0:
         info.time = DS.GetDescription().split('_')[2]
     else:
         raise Exception('Optical data NOT supported yet!')
 
     info.numberOfLines = ysize1
     info.numberOfSamples = xsize1
-    
+
     info.filename = indir_m
 
     DS1 = gdal.Open(indir_s, gdal.GA_ReadOnly)
@@ -219,7 +219,7 @@ def coregisterLoadMetadataOptical(indir_m, indir_s):
     if re.findall("L[CO]08_",DS1.GetDescription()).__len__() > 0:
         nameString1 = os.path.basename(DS1.GetDescription())
         info1.time = nameString1.split('_')[3]
-    elif re.findall("S2._",DS1.GetDescription()).__len__() > 0:
+    elif re.findall("s2-l1c",DS1.GetDescription()).__len__() > 0:
         info1.time = DS1.GetDescription().split('_')[2]
     else:
         raise Exception('Optical data NOT supported yet!')
@@ -227,7 +227,7 @@ def coregisterLoadMetadataOptical(indir_m, indir_s):
     return info, info1
 
 
-def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, csmaxx, csmaxy, ssm):
+def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, csmaxx, csmaxy, ssm, **kwargs):
     '''
     Wire and run geogrid.
     '''
@@ -270,22 +270,43 @@ def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, c
     obj.winssmname = "window_stable_surface_mask.tif"
     obj.winro2vxname = "window_rdr_off2vel_x_vec.tif"
     obj.winro2vyname = "window_rdr_off2vel_y_vec.tif"
-    
+
     obj.getIncidenceAngle()
     obj.geogrid()
 
+    run_info = {
+        'chipsizex0': obj.chipsizex0,
+        'vxname': vx,
+        'vyname': vy,
+        'sxname': srx,
+        'syname': sry,
+        'maskname': kwargs.get('sp'),
+        'xoff': None,  # FIXME: Get from C object (is calculated) or another source
+        'yoff': None,  # FIXME: Get from C object (is calculated) or another source
+        'xcount': None,  # FIXME: Get from C object (is calculated) or another source
+        'ycount': None,  # FIXME: Get from C object (is calculated) or another source
+        'dt': obj.repeatTime,
+        'epsg': kwargs.get('epsg'),
+        'XPixelSize': None,  # FIXME: Get from C object (is calculated) or another source
+        'YPixelSize': None,  # FIXME: Get from C object (is calculated) or another source
+        'pixsizex': None,  # FIXME: Get from C object (is calculated) or another source
+        'rangePixelSize': None,  # FIXME: Get from C object (is calculated) or another source
+        'azimuthPixelSize': None,  # FIXME: Get from C object (is calculated) or another source
+    }
+
+    return run_info
 
 
-def runGeogridOptical(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, csmaxx, csmaxy, ssm):
+def runGeogridOptical(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, csmaxx, csmaxy, ssm, **kwargs):
     '''
     Wire and run geogrid.
     '''
 
     from components.contrib.geo_autoRIFT.geogrid import GeogridOptical
 #    from geogrid import GeogridOptical
-    
+
     obj = GeogridOptical()
-    
+
     obj.startingX = info.startingX
     obj.startingY = info.startingY
     obj.XSize = info.XSize
@@ -323,10 +344,27 @@ def runGeogridOptical(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, cs
     obj.winssmname = "window_stable_surface_mask.tif"
     obj.winro2vxname = "window_rdr_off2vel_x_vec.tif"
     obj.winro2vyname = "window_rdr_off2vel_y_vec.tif"
-    
+
     obj.runGeogrid()
 
+    run_info = {
+        'chipsizex0': obj.chipSizeX0,
+        'vxname': vx,
+        'vyname': vy,
+        'sxname': srx,
+        'syname': sry,
+        'maskname': kwargs.get('sp'),
+        'xoff': obj.pOff,
+        'yoff': obj.lOff,
+        'xcount': obj.pCount,
+        'ycount': obj.lCount,
+        'dt': obj.repeatTime,
+        'epsg': kwargs.get('epsg'),
+        'XPixelSize': obj.X_res,
+        'YPixelSize': obj.Y_res,
+    }
 
+    return run_info
 
 def main():
     '''
@@ -334,7 +372,7 @@ def main():
     '''
 
     inps = cmdLineParse()
-    
+
     if inps.optical_flag == 1:
         metadata_m, metadata_s = coregisterLoadMetadataOptical(inps.indir_m, inps.indir_s)
         runGeogridOptical(metadata_m, metadata_s, inps.demfile, inps.dhdxfile, inps.dhdyfile, inps.vxfile, inps.vyfile, inps.srxfile, inps.sryfile, inps.csminxfile, inps.csminyfile, inps.csmaxxfile, inps.csmaxyfile, inps.ssmfile)

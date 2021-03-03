@@ -85,7 +85,7 @@ def loadMetadata(indir):
     from osgeo import gdal, osr
     import struct
     import re
-        
+
     DS = gdal.Open(indir, gdal.GA_ReadOnly)
     trans = DS.GetGeoTransform()
 
@@ -98,14 +98,14 @@ def loadMetadata(indir):
     if re.findall("L[CO]08_",DS.GetDescription()).__len__() > 0:
         nameString = os.path.basename(DS.GetDescription())
         info.time = nameString.split('_')[3]
-    elif re.findall("S2._",DS.GetDescription()).__len__() > 0:
+    elif re.findall("s2-l1c",DS.GetDescription()).__len__() > 0:
         info.time = DS.GetDescription().split('_')[2]
     else:
         raise Exception('Optical data NOT supported yet!')
 
     info.numberOfLines = DS.RasterYSize
     info.numberOfSamples = DS.RasterXSize
-    
+
     info.filename = indir
 
 
@@ -118,11 +118,11 @@ def coregisterLoadMetadata(indir_m, indir_s):
         '''
     import os
     import numpy as np
-    
+
     from osgeo import gdal, osr
     import struct
     import re
-    
+
     from geogrid import GeogridOptical
 #    from components.contrib.geo_autoRIFT.geogrid import GeogridOptical
 
@@ -141,14 +141,14 @@ def coregisterLoadMetadata(indir_m, indir_s):
     if re.findall("L[CO]08_",DS.GetDescription()).__len__() > 0:
         nameString = os.path.basename(DS.GetDescription())
         info.time = nameString.split('_')[3]
-    elif re.findall("S2._",DS.GetDescription()).__len__() > 0:
+    elif re.findall("s2-l1c",DS.GetDescription()).__len__() > 0:
         info.time = DS.GetDescription().split('_')[2]
     else:
         raise Exception('Optical data NOT supported yet!')
-    
+
     info.numberOfLines = ysize1
     info.numberOfSamples = xsize1
-    
+
     info.filename = indir_m
 
     DS1 = gdal.Open(indir_s, gdal.GA_ReadOnly)
@@ -158,7 +158,7 @@ def coregisterLoadMetadata(indir_m, indir_s):
     if re.findall("L[CO]08_",DS1.GetDescription()).__len__() > 0:
         nameString1 = os.path.basename(DS1.GetDescription())
         info1.time = nameString1.split('_')[3]
-    elif re.findall("S2._",DS1.GetDescription()).__len__() > 0:
+    elif re.findall("s2-l1c",DS1.GetDescription()).__len__() > 0:
         info1.time = DS1.GetDescription().split('_')[2]
     else:
         raise Exception('Optical data NOT supported yet!')
@@ -166,11 +166,11 @@ def coregisterLoadMetadata(indir_m, indir_s):
     return info, info1
 
 
-def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, csmaxx, csmaxy, ssm):
+def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, csmaxx, csmaxy, ssm, **kwargs):
     '''
     Wire and run geogrid.
     '''
-    
+
     from geogrid import GeogridOptical
 #    from components.contrib.geo_autoRIFT.geogrid import GeogridOptical
 
@@ -216,6 +216,24 @@ def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, c
 
     obj.runGeogrid()
 
+    run_info = {
+        'chipsizex0': obj.chipSizeX0,
+        'vxname': vx,
+        'vyname': vy,
+        'sxname': srx,
+        'syname': sry,
+        'maskname': kwargs.get('sp'),
+        'xoff': obj.pOff,
+        'yoff': obj.lOff,
+        'xcount': obj.pCount,
+        'ycount': obj.lCount,
+        'dt': obj.repeatTime,
+        'epsg': kwargs.get('epsg'),
+        'XPixelSize': obj.X_res,
+        'YPixelSize': obj.Y_res,
+    }
+
+    return run_info
 
 def main():
     '''
