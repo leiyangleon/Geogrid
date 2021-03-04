@@ -144,13 +144,14 @@ def loadMetadata(indir):
 
 def loadMetadataOptical(indir):
     '''
-        Input file.
-        '''
+    Input file.
+    '''
     import os
     import numpy as np
 
     from osgeo import gdal, osr
     import struct
+    import re
 
     DS = gdal.Open(indir, gdal.GA_ReadOnly)
     trans = DS.GetGeoTransform()
@@ -161,8 +162,14 @@ def loadMetadataOptical(indir):
     info.XSize = trans[1]
     info.YSize = trans[5]
 
-    nameString = os.path.basename(DS.GetDescription())
-    info.time = nameString.split('_')[3]
+    if re.findall("L[CO]08_",DS.GetDescription()).__len__() > 0:
+        nameString = os.path.basename(DS.GetDescription())
+        info.time = nameString.split('_')[3]
+    elif re.findall("S2._",DS.GetDescription()).__len__() > 0:
+        info.time = DS.GetDescription().split('_')[2]
+    else:
+        raise Exception('Optical data NOT supported yet!')
+
 
     info.numberOfLines = DS.RasterYSize
     info.numberOfSamples = DS.RasterXSize
@@ -175,8 +182,8 @@ def loadMetadataOptical(indir):
 
 def coregisterLoadMetadataOptical(indir_m, indir_s):
     '''
-        Input file.
-        '''
+    Input file.
+    '''
     import os
     import numpy as np
 

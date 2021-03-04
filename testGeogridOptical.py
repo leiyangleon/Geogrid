@@ -114,8 +114,8 @@ def loadMetadata(indir):
 
 def coregisterLoadMetadata(indir_m, indir_s):
     '''
-        Input file.
-        '''
+    Input file.
+    '''
     import os
     import numpy as np
 
