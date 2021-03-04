@@ -170,7 +170,6 @@ def loadMetadataOptical(indir):
     else:
         raise Exception('Optical data NOT supported yet!')
 
-
     info.numberOfLines = DS.RasterYSize
     info.numberOfSamples = DS.RasterXSize
 
@@ -191,6 +190,7 @@ def coregisterLoadMetadataOptical(indir_m, indir_s):
     import struct
     import re
 
+    import isce
     from components.contrib.geo_autoRIFT.geogrid import GeogridOptical
 #    from geogrid import GeogridOptical
 
@@ -312,6 +312,7 @@ def runGeogridOptical(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, cs
     Wire and run geogrid.
     '''
 
+    import isce
     from components.contrib.geo_autoRIFT.geogrid import GeogridOptical
 #    from geogrid import GeogridOptical
 
