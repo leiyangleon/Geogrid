@@ -285,7 +285,7 @@ def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, c
     obj.geogrid()
 
     run_info = {
-        'chipsizex0': obj.chipsizex0,
+        'chipsizex0': obj.chipSizeX0,
         'vxname': vx,
         'vyname': vy,
         'sxname': srx,
