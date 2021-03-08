@@ -288,8 +288,8 @@ def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, c
         'chipsizex0': obj.chipSizeX0,
         'vxname': vx,
         'vyname': vy,
-        'sxname': srx,
-        'syname': sry,
+        'sxname': kwargs.get('dhdxs'),
+        'syname': kwargs.get('dhdys'),
         'maskname': kwargs.get('sp'),
         'xoff': None,  # FIXME: Get from C object (is calculated) or another source
         'yoff': None,  # FIXME: Get from C object (is calculated) or another source
@@ -365,8 +365,8 @@ def runGeogridOptical(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, cs
         'chipsizex0': obj.chipSizeX0,
         'vxname': vx,
         'vyname': vy,
-        'sxname': srx,
-        'syname': sry,
+        'sxname': kwargs.get('dhdxs'),
+        'syname': kwargs.get('dhdys'),
         'maskname': kwargs.get('sp'),
         'xoff': obj.pOff,
         'yoff': obj.lOff,
