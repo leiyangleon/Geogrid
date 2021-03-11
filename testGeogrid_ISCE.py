@@ -262,9 +262,6 @@ def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, c
         'epsg': kwargs.get('epsg'),
         'XPixelSize': None,  # FIXME: Get from C object (is calculated) or another source
         'YPixelSize': None,  # FIXME: Get from C object (is calculated) or another source
-        'pixsizex': None,  # FIXME: Get from C object (is calculated) or another source
-        'rangePixelSize': None,  # FIXME: Get from C object (is calculated) or another source
-        'azimuthPixelSize': None,  # FIXME: Get from C object (is calculated) or another source
     }
 
     return run_info
