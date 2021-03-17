@@ -254,14 +254,14 @@ def runGeogrid(info, info1, dem, dhdx, dhdy, vx, vy, srx, sry, csminx, csminy, c
         'sxname': kwargs.get('dhdxs'),
         'syname': kwargs.get('dhdys'),
         'maskname': kwargs.get('sp'),
-        'xoff': None,  # FIXME: Get from C object (is calculated) or another source
-        'yoff': None,  # FIXME: Get from C object (is calculated) or another source
-        'xcount': None,  # FIXME: Get from C object (is calculated) or another source
-        'ycount': None,  # FIXME: Get from C object (is calculated) or another source
+        'xoff': obj.pOff,
+        'yoff': obj.lOff,
+        'xcount': obj.pCount,
+        'ycount': obj.lCount,
         'dt': obj.repeatTime,
         'epsg': kwargs.get('epsg'),
-        'XPixelSize': None,  # FIXME: Get from C object (is calculated) or another source
-        'YPixelSize': None,  # FIXME: Get from C object (is calculated) or another source
+        'XPixelSize': obj.X_res,
+        'YPixelSize': obj.Y_res,
     }
 
     return run_info
