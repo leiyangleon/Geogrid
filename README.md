@@ -3,7 +3,9 @@
 ### Update Notes:
 
 ```diff
-+ Note from now on, the two testGeogrid scripts (testGeogridOptical.py and testGeogrid_ISCE.py) are only hosted on the sister module autoRIFT's GitHub page. Thus, they have been removed from this website.
++ Note from now on, the two testGeogrid scripts (testGeogridOptical.py and testGeogrid_ISCE.py) are only 
++  hosted on the sister module autoRIFT's GitHub page (https://github.com/leiyangleon/autoRIFT). 
++  Thus, they have been removed from this website.
 ```
 
 **A Python module for precise mapping between (pixel index, pixel displacement) in imaging coordinates and (geolocation, motion velocity) in geographic Cartesian (northing/easting) coordinates**
