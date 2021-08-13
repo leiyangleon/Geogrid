@@ -36,15 +36,9 @@ This effort was funded by the NASA MEaSUREs program in contribution to the Inter
 
 
 
-## 4. Demo
-
-[_4.1 Radar Demo_](/docs/rdr_demo.md)
+## 4. [Demo](/docs/demo.md)
 
 
-
-
-
-[_4.2 Optical Demo_](/docs/opt_demo.md)
 
 
 
