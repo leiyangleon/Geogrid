@@ -42,13 +42,13 @@ This effort was funded by the NASA MEaSUREs program in contribution to the Inter
 
 
 
-## 6. Install
+## 5. Install
 
 Please refer to the installation guide of autoRIFT repository (https://github.com/leiyangleon/autoRIFT) for installing the Geogrid module.
 
 
 
-## 5. [Instructions](/docs/instruction.md)
+## 6. [Instructions](/docs/instruction.md)
 
 
 
