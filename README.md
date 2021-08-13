@@ -25,7 +25,7 @@ Link: https://github.com/leiyangleon/Geogrid
 ## 1. Authors
 
 
-Piyush Agram (JPL/Caltech; piyush.agram@jpl.nasa.gov), Yang Lei (GPS/Caltech; ylei@caltech.edu)
+Piyush Agram (JPL/Caltech; piyush@gps.caltech.edu), Yang Lei (GPS/Caltech; ylei@caltech.edu; leiyangfrancis@gmail.com)
 
 ## 2. Acknowledgement
 
