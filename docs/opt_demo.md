@@ -1,4 +1,4 @@
-_4.2 Optical Demo_
+### 4.2 Optical Demo
 
 <img src="../figures/optical_opt.png" width="50%">
 
@@ -26,6 +26,6 @@ where "image1" and "image2" are the optical images with map coordinate informati
 Using the matrix of conversion coefficients, when fine pixel displacement are estimated from optical data, they can be immediately converted to motion velocity. See the final result below by using the matrix of conversion coefficients from the "Geogrid" module and the optical data-estimated fine pixel displacement from the "autoRIFT" module (https://github.com/leiyangleon/autoRIFT).
 
 
-<img src="../figures/autorift2_opt.png" width="100%">
+<img src="../figures/autorift2_opt_new.png" width="100%">
 
 ***Final motion velocity results by combining outputs from "Geogrid" and "autoRIFT" modules: (a) estimated motion velocity from Landsat-8 data (x-direction; in m/yr), (b) motion velocity from input data (x-direction; in m/yr), (c) estimated motion velocity from Landsat-8 data (y-direction; in m/yr), (d) motion velocity from input data (y-direction; in m/yr). Notes: all maps are established exactly over the same geographic Cartesian (northing/easting) coordinate grid from input.***
