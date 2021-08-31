@@ -19,7 +19,7 @@ With ISCE:
 where "reference_image_folder" and "secondary_image_folder" are the folders storing coregistered reference and secondary image information (e.g. radar parameters), and "demname", "dhdxname", "dhdyname", "vxname", "vyname", "srxname", "sryname", "csminxname", "csminyname", "csmaxxname", "csmaxyname" and "ssmname" are optional inputs that are defined below in the section of instructions.
 
 
-Using the matrix of conversion coefficients from the Geogrid outputs, when range/azimuth fine pixel displacement are estimated from radar data using autoRIFT, they can be immediately converted to motion velocity in northing/easting-direction. See the final result below by using the matrix of conversion coefficients from the "Geogrid" module and the radar-estimated fine pixel displacement from the "autoRIFT" module (https://github.com/leiyangleon/autoRIFT).
+Using the matrix of conversion coefficients from the Geogrid outputs, when range/azimuth fine pixel displacement are estimated from radar data using autoRIFT, they can be immediately converted to motion velocity in northing/easting-direction. See the final result below by using the matrix of conversion coefficients from the "Geogrid" module and the radar-estimated fine pixel displacement from the "autoRIFT" module (https://github.com/nasa-jpl/autoRIFT).
 
 
 <img src="../figures/autorift2.png" width="100%">
