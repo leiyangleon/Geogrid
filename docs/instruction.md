@@ -170,8 +170,8 @@ _2. Map-projected Cartesian-coordinate Imagery:_
        wincsminname:        (output) file path/name of the 2-band (in image horizontal and vertical direction) chip size minimum in pixels (at each grid point)
        wincsmaxname:        (output) file path/name of the 2-band (in image horizontal and vertical direction) chip size maximum in pixels (at each grid point)
        winssmname:          (output) file path/name of the stable surface mask (at each grid point)
-       winro2vxname:        (output) file path/name of the 2-band (in image horizontal and vertical direction) conversion coefficients from pixel displacement to x-direction (easting) motion velocity (at each grid point)
-       winro2vyname:        (output) file path/name of the 2-band (in image horizontal and vertical direction) conversion coefficients from pixel displacement to y-direction (northing) motion velocity (at each grid point)
+       winro2vxname:        (output) file path/name of the 2-band (in image horizontal and vertical direction) or 3-band (for radar only) conversion coefficients from pixel displacement to x-direction (easting) motion velocity (at each grid point)
+       winro2vyname:        (output) file path/name of the 2-band (in image horizontal and vertical direction) or 3-band (for radar only) conversion coefficients from pixel displacement to y-direction (northing) motion velocity (at each grid point)
        
        
 * For using Geogrid, a grid must be specified, which can be a real DEM for processing radar imagery and a dummy DEM (with all zero values) for optical imagery. Each of the rest optional input can be either used or omitted.
@@ -191,4 +191,4 @@ _2. Map-projected Cartesian-coordinate Imagery:_
 
        obj.geogrid() or obj.runGeogrid()
 
-where "obj.geogrid()" is for radar-coordinate imagery, and "obj.runGeogrid()" for map-projected Cartesian-coordinate (optical) imagery.
+  where "obj.geogrid()" is for radar-coordinate imagery, and "obj.runGeogrid()" for map-projected Cartesian-coordinate (optical) imagery.
