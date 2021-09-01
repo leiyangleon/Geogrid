@@ -140,14 +140,20 @@ _2. Map-projected Cartesian-coordinate Imagery:_
        nodata_out:          nodata value in the output
        chipSizeX0:          Smallest chip size allowed in image horizontal direction (in m)
        gridSpacingX:        Grid spacing in x direction (in m)
-       _xlim:               x coordinate limits (in m)
-       _ylim:               y coordinate limits (in m)
-       pOff:                Grid starting pixel index in x direction (in integer pixels)
-       lOff:                Grid starting line index in y direction (in integer pixels)
-       pCount:              number of grid pixels in x direction (in integer pixels)
-       lCount:              number of grid lines in y direction (in integer pixels)
-       X_res:               grid posting in x direction (in m)
-       Y_res:               grid posting in y direction (in m)
+       %%%%%%%%%% repeatTime-dependent search range scale (multiplicative) %%%%%%%%%%
+       srs_dt_unity:        repeat time (in days) when scale is linearly brought down to unity (1)
+       srs_max_scale:       maximum scale (unitless) for 1-day repeat time
+       srs_max_search:      maximum search range of velocity (in m/yr) allowed after applying search range scale
+       srs_min_search:      minimum search range of velocity (in m/yr) allowed after applying search range scale
+       %%%%%%%%% grid extent/posting specifics (output; no need to assign) %%%%%%%%%%
+       _xlim:               x coordinate limits
+       _ylim:               y coordinate limits
+       pOff:                Grid starting pixel index in x direction 
+       lOff:                Grid starting line index in y direction 
+       pCount:              number of grid pixels in x direction 
+       lCount:              number of grid lines in y direction
+       X_res:               pixel size in ground range (radar) or image horizontal (optical) direction
+       Y_res:               pixel size in azimuth (radar) or image vertical (optical) direction 
        
        ------------------input file names------------------
        demname:             (input; required) file path/name of the DEM
