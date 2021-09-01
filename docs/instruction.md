@@ -4,8 +4,8 @@
 **Note:**
 
 * For radar-coordinate imagery, it is recommended to run ISCE up to the step where co-registered SLC's are done, e.g. "mergebursts" for using topsApp.
-* For Cartesian-coordinate imagery, the images have to be co-registered with the same posting as well as the same x- and y-limits in map coordinates.
-* The input DEM grid along with the auxilliary files have to be in the geographic Cartesian coordinate projection (with geographic x, y coordinates being easting, northing defined as distances in units of m); the geographic coordinate system (with latitude and longitude) is not supported. Users are recommended to do the GDAL coordinate transformation themselves before using the current version of the Geogrid module.
+* For map-projected geographic Cartesian-coordinate (e.g. optical) imagery, the images have to be co-registered with the same posting as well as the same x- and y-limits in map coordinates.
+* The input DEM grid along with the auxilliary files have to be in the same map-projected geographic Cartesian coordinate projection (with x/y coordinates being easting/northing defined as distances in units of m); the geographic coordinate system (with latitude and longitude) is not supported. Users are recommended to do the GDAL coordinate transformation themselves before using Geogrid module.
 
 
 
@@ -13,15 +13,82 @@
 
 _Radar-coordinate Imagery:_
 * Refer to the file "testGeogrid_ISCE.py" (with ISCE) for the usage of the module and modify it for your own purpose
-* Input files include the master image folder (required), slave image folder (required), a DEM (required; in units of m), local surface slope maps (unitless), velocity maps (in units of m/yr), velocity search range maps (in units of m/yr), chip size minimum/maximum maps (in units of m), stable surface mask.
-* Output files include 1) the range and azimuth pixel indices (in units of integer image pixels), 2) the range and azimuth pixel displacement (in units of integer image pixels), 3) the range and azimuth search range (in units of integer image pixels), 4) the range and azimuth chip size minimum (in units of integer image pixels), 5) the range and azimuth chip size maximum (in units of integer image pixels), 6) the stable surface mask (boolean), 7) the conversion coefficients from radar range and azimuth displacement to motion velocity in geographic x-coordinate, and 8) the conversion coefficients from radar range and azimuth displacement to motion velocity in geographic y-coordinate. 
+* Mandatory input files include: 
 
-_Cartesian-coordinate Imagery:_
+       "reference_image_folder" (-m option):     the coregistered reference image folder (required)
+       "secondary_image_folder" (-s option):     the coregistered secondary image folder (required)
+       "demname" (-d option):                    a DEM (required; in units of m)
+  Optional inputs include:
+       
+       "dhdxname"/"dhdyname" (-sx/-sy option):                 x/y local surface slope maps (unitless)
+       "vxname"/"vyname" (-vx/-vy option):                     x/y reference velocity maps (in units of m/yr)
+       "srxname"/"sryname" (-srx/-sry option):                 x/y velocity search range maps (in units of m/yr)
+       "csminxname"/"csminyname" (-csminx/-csminy option):     x/y chip size minimum maps (in units of m; constant ratio between x and y)
+       "csmaxxname"/"csmaxyname" (-csmaxx/-csmaxy option):     x/y chip size maximum maps (in units of m; constant ratio between x and y)
+       "ssmname" (-ssm option):                                stable surface mask (boolean)
+* Output files may include all or some of the following (depending on the input fed in): 
+
+       "winlocname":        the range and azimuth pixel indices (2-band; in units of integer image pixels), 
+       "winoffname":        the downstream search (expected) range and azimuth pixel displacement (2-band; in units of integer image pixels), 
+       "winsrname":         the range and azimuth search range (2-band; in units of integer image pixels), 
+       "wincsminname":      the range and azimuth chip size minimum (2-band; in units of integer image pixels), 
+       "wincsmaxname":      the range and azimuth chip size maximum (2-band; in units of integer image pixels), 
+       "winssmname":        the stable surface mask (boolean), 
+       "winro2vxname":      the 2-by-1 conversion coefficients from radar range and azimuth displacement to x-direction motion velocity (3-band; 3rd band is conversion coefficient from range pixel displacement to range motion velocity), 
+       "winro2vyname":      the 2-by-1 conversion coefficients from radar range and azimuth displacement to y-direction motion velocity (3-band; 3rd band is conversion coefficient from azimuth pixel displacement to azimuth motion velocity). 
+* For using Geogrid, a grid must be specified, which can be a real DEM for processing radar imagery and a dummy DEM (with all zero values) for optical imagery. Each of the rest optional input can be either used or omitted.
+
+       input "demname"                                         -> output "winlocname"
+* For full/combinative use of the optional inputs, please see below, where some ouputs may depend on multiple inputs and others may only depend on single input
+                 
+       input "dhdxname"/"dhdyname"                             -> output "winro2vxname"/"winro2vyname"
+       input "dhdxname"/"dhdyname" and "vxname"/"vyname"       -> output "winro2vxname"/"winro2vyname" and "winoffname" 
+       input "dhdxname"/"dhdyname" and "srxname"/"sryname"     -> output "winro2vxname"/"winro2vyname" and "winsrname"
+       input "csminxname"/"csminyname"                         -> output "wincsminname"
+       input "csmaxxname"/"csmaxyname"                         -> output "wincsmaxname"
+       input "ssmname"                                         -> output "winssmname"
+  _Note: "winlocname" will always be created, while the others will be generated contingent upon that the corresponding optional inputs are provided as above._       
+
+
+_Map-projected Cartesian-coordinate Imagery:_
 * Refer to the file "testGeogrid_ISCE.py" (with ISCE) and "testGeogridOptical.py" (standalone) for the usage of the module and modify it for your own purpose
 * Input files include the image 1 (required), image 2 (required), a DEM (required; in units of m), local surface slope maps (unitless), velocity maps (in units of m/yr)
-* Output files include 1) the horizontal and vertical pixel indices (in units of integer image pixels), 2) the horizontal and vertical pixel displacement (in units of integer image pixels), 3) the horizontal and vertical search range (in units of integer image pixels), 4) the horizontal and vertical chip size minimum (in units of integer image pixels), 5) the horizontal and vertical chip size maximum (in units of integer image pixels), 6) the stable surface mask (boolean), 3) the conversion coefficients from horizontal and vertical displacement to motion velocity in geographic x-coordinate, and 4) the conversion coefficients from horizontal and vertical displacement to motion velocity in geographic y-coordinate. 
+* Mandatory input files include: 
 
-_Note: among these, 1) will always be created, while 2) and 7-8) will be generated contingent upon that local surface slope and velocity maps are provided. The rest, i.e. 3-6) will be created only when the corresponding inputs are provided._
+       "reference_image_folder" (-m option):     the coregistered reference image (required)
+       "secondary_image_folder" (-s option):     the coregistered secondary image (required)
+       "demname" (-d option):                    a real or dummy (all-zero-value) DEM (required; in units of m)
+  Optional inputs include:
+       
+       "dhdxname"/"dhdyname" (-sx/-sy option):                 x/y local surface slope maps (unitless; can be all-zero-value)
+       "vxname"/"vyname" (-vx/-vy option):                     x/y reference velocity maps (in units of m/yr)
+       "srxname"/"sryname" (-srx/-sry option):                 x/y velocity search range maps (in units of m/yr)
+       "csminxname"/"csminyname" (-csminx/-csminy option):     x/y chip size minimum maps (in units of m; constant ratio between x and y)
+       "csmaxxname"/"csmaxyname" (-csmaxx/-csmaxy option):     x/y chip size maximum maps (in units of m; constant ratio between x and y)
+       "ssmname" (-ssm option):                                stable surface mask (boolean)
+* Output files may include all or some of the following (depending on the input fed in): 
+
+       "winlocname":        the horizontal and vertical pixel indices (2-band; in units of integer image pixels), 
+       "winoffname":        the downstream search (expected) horizontal and vertical pixel displacement (2-band; in units of integer image pixels), 
+       "winsrname":         the horizontal and vertical search range (2-band; in units of integer image pixels), 
+       "wincsminname":      the horizontal and vertical chip size minimum (2-band; in units of integer image pixels), 
+       "wincsmaxname":      the horizontal and vertical chip size maximum (2-band; in units of integer image pixels), 
+       "winssmname":        the stable surface mask (boolean), 
+       "winro2vxname":      the 2-by-1 conversion coefficients from horizontal and vertical displacement to x-direction motion velocity (2-band), 
+       "winro2vyname":      the 2-by-1 conversion coefficients from horizontal and vertical displacement to y-direction motion velocity (2-band). 
+* For using Geogrid, a grid must be specified, which can be a real DEM for processing radar imagery and a dummy DEM (with all zero values) for optical imagery. Each of the rest optional input can be either used or omitted.
+
+       input "demname"                                         -> output "winlocname"
+* For full/combinative use of the optional inputs, please see below, where some ouputs may depend on multiple inputs and others may only depend on single input
+                 
+       input "dhdxname"/"dhdyname"                             -> output "winro2vxname"/"winro2vyname"
+       input "dhdxname"/"dhdyname" and "vxname"/"vyname"       -> output "winro2vxname"/"winro2vyname" and "winoffname" 
+       input "dhdxname"/"dhdyname" and "srxname"/"sryname"     -> output "winro2vxname"/"winro2vyname" and "winsrname"
+       input "csminxname"/"csminyname"                         -> output "wincsminname"
+       input "csmaxxname"/"csmaxyname"                         -> output "wincsmaxname"
+       input "ssmname"                                         -> output "winssmname"
+  _Note: "winlocname" will always be created, while the others will be generated contingent upon that the corresponding optional inputs are provided as above._
+
 
 **For modular use:**
 
