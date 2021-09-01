@@ -1,11 +1,14 @@
 # Geogrid
 
+***Note from now on, the two testGeogrid scripts (testGeogridOptical.py and testGeogrid_ISCE.py) are only hosted on the sister module autoRIFT's GitHub page (https://github.com/nasa-jpl/autoRIFT). Thus, they have been removed from this website.***
+
 ### Update Notes:
 
 ```diff
-+ Note from now on, the two testGeogrid scripts (testGeogridOptical.py and testGeogrid_ISCE.py) are only 
-+  hosted on the sister module autoRIFT's GitHub page (https://github.com/nasa-jpl/autoRIFT). 
-+  Thus, they have been removed from this website.
++ refined the workflow and ready for scaling the production of both optical and radar data results
++ improved memory use (by 50%) for autoRIFT and runtime (60x) for GeogridOptical
++ support for remote input files using GDAL virtual file systems (e.g., `/vsicurl/https://...`)
++   see: https://gdal.org/user/virtual_file_systems.html
 ```
 
 **A Python module for precise mapping between (pixel index, pixel displacement) in image coordinates and (geolocation, motion velocity) in map-projected geographic Cartesian (northing/easting) coordinates**
