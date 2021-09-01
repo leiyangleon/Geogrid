@@ -138,18 +138,18 @@ _2. Map-projected Cartesian-coordinate Imagery:_
        
        ------------------MISC parameters (preparation for autoRIFT)------------------
        nodata_out:          nodata value in the output
-       chipSizeX0:          Smallest chip size allowed in image horizontal direction (in m)
-       gridSpacingX:        Grid spacing in x direction (in m)
+       chipSizeX0:          smallest chip size allowed in image horizontal direction (in m)
+       gridSpacingX:        grid spacing in x direction (in m)
        %%%%%%%%%% repeatTime-dependent search range scale (multiplicative) %%%%%%%%%%
        srs_dt_unity:        repeat time (in days) when scale is linearly brought down to unity (1)
        srs_max_scale:       maximum scale (unitless) for 1-day repeat time
        srs_max_search:      maximum search range of velocity (in m/yr) allowed after applying search range scale
        srs_min_search:      minimum search range of velocity (in m/yr) allowed after applying search range scale
        %%%%%%%%% grid extent/posting specifics (output; no need to assign) %%%%%%%%%%
-       _xlim:               x coordinate limits
-       _ylim:               y coordinate limits
-       pOff:                Grid starting pixel index in x direction 
-       lOff:                Grid starting line index in y direction 
+       _xlim:               grid x coordinate limits
+       _ylim:               grid y coordinate limits
+       pOff:                grid starting pixel index in x direction 
+       lOff:                grid starting line index in y direction 
        pCount:              number of grid pixels in x direction 
        lCount:              number of grid lines in y direction
        X_res:               pixel size in ground range (radar) or image horizontal (optical) direction
