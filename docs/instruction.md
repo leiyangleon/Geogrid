@@ -108,7 +108,9 @@ _2. Map-projected Cartesian-coordinate Imagery:_
   where "Geogrid()" is for radar-coordinate imagery and "GeogridOptical()" for Cartesian-coordinate imagery.
 
 
-* The "Geogrid" object has several parameters that have to be set up (listed below; can also be obtained by referring to "testGeogrid_ISCE.py"): [Note these parameters are automatically assigned in "testGeogrid_ISCE.py" based on the dataset used, and one can also modify them for their own purpose; also notice the image pair data are not listed below, in contrast, only the imagery parameters are shown below and actually used by Geogrid, which again are automatically set up in "testGeogrid_ISCE.py" by analyzing the image pair data] 
+* The "Geogrid" object has several parameters that have to be set up (listed below; can also be obtained by referring to "testGeogrid_ISCE.py"): 
+  
+  [Note these parameters are automatically assigned in "testGeogrid_ISCE.py" based on the dataset used, and one can also modify them for their own purpose; also notice the image pair data are not listed below, in contrast, only the imagery parameters are shown below and actually used by Geogrid, which again are automatically set up in "testGeogrid_ISCE.py" by analyzing the image pair data] 
 
        ------------------radar-coordinate imagery parameters (for radar only)------------------
        startingRange:       starting range
@@ -136,8 +138,8 @@ _2. Map-projected Cartesian-coordinate Imagery:_
        
        ------------------MISC parameters (preparation for autoRIFT)------------------
        nodata_out:          nodata value in the output
-       chipSizeX0:          Smallest chip size allowed (in m)
-       gridSpacingX:        Grid spacing in X direction (in m)
+       chipSizeX0:          Smallest chip size allowed in image horizontal direction (in m)
+       gridSpacingX:        Grid spacing in x direction (in m)
        _xlim:               x coordinate limits (in m)
        _ylim:               y coordinate limits (in m)
        pOff:                Grid starting pixel index in x direction (in integer pixels)
@@ -160,7 +162,6 @@ _2. Map-projected Cartesian-coordinate Imagery:_
        csmaxxname:          (input; not required) file path/name of the chip size maximum (in m) in horizontal direction
        csmaxyname:          (input; not required) file path/name of the chip size maximum (in m) in vertical direction
        ssmname:             (input; not required) file path/name of the stable surface mask
-       
        
        ------------------output file names------------------
        winlocname:          (output) file path/name of the 2-band (in image horizontal and vertical direction) pixel indices (at each grid point)
