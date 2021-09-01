@@ -108,7 +108,7 @@ _2. Map-projected Cartesian-coordinate Imagery:_
   where "Geogrid()" is for radar-coordinate imagery and "GeogridOptical()" for Cartesian-coordinate imagery.
 
 
-* The "Geogrid" object has several parameters that have to be set up (listed below; can also be obtained by referring to "testGeogrid_ISCE.py"): 
+* The "Geogrid" object has several parameters that have to be set up (listed below; can also be obtained by referring to "testGeogrid_ISCE.py"): [Note these parameters are automatically assigned in "testGeogrid_ISCE.py" based on the dataset used, and one can also modify them for their own purpose; also notice the image pair data are not listed below, in contrast, only the imagery parameters are shown below and actually used by Geogrid, which again are automatically set up in "testGeogrid_ISCE.py" by analyzing the image pair data] 
 
        ------------------radar-coordinate imagery parameters (for radar only)------------------
        startingRange:       starting range
@@ -124,15 +124,15 @@ _2. Map-projected Cartesian-coordinate Imagery:_
        epsg:                EPSG code for DEM map projection
        
        ------------------Map-projected Cartesian-coordinate imagery parameters (for optical only)------------------
-       startingX:           starting coordinate in x direction
-       startingY:           starting coordinate in y direction
-       XSize:               resolution in x direction
-       YSize:               resolution in y direction
+       startingX:           starting coordinate in image horizontal direction
+       startingY:           starting coordinate in image vertical direction
+       XSize:               image horizontal pixel size
+       YSize:               image vertical pixel size
        repeatTime:          time period between the acquisition of the two optical images
-       numberOfLines:       number of lines (in y direction)
-       numberOfSamples:     number of samples (in x direction)
+       numberOfLines:       number of lines (in image vertical direction)
+       numberOfSamples:     number of samples (in image horizontal direction)
        epsgDem:             EPSG code for DEM map projection
-       epsgDat:             EPSG code for image data map projection
+       epsgDat:             EPSG code for image pair map projection
        
        ------------------MISC parameters (preparation for autoRIFT)------------------
        nodata_out:          nodata value in the output
@@ -140,12 +140,12 @@ _2. Map-projected Cartesian-coordinate Imagery:_
        gridSpacingX:        Grid spacing in X direction (in m)
        _xlim:               x coordinate limits (in m)
        _ylim:               y coordinate limits (in m)
-       pOff:                Grid starting pixel index in horizontal direction (in integer pixels)
-       lOff:                Grid starting line index in vertical direction (in integer pixels)
-       pCount:              number of grid pixels in horizontal direction (in integer pixels)
-       lCount:              number of grid lines in vertical direction (in integer pixels)
-       X_res:               grid posting in horizontal direction (in m)
-       Y_res:               grid posting in vertical direction (in m)
+       pOff:                Grid starting pixel index in x direction (in integer pixels)
+       lOff:                Grid starting line index in y direction (in integer pixels)
+       pCount:              number of grid pixels in x direction (in integer pixels)
+       lCount:              number of grid lines in y direction (in integer pixels)
+       X_res:               grid posting in x direction (in m)
+       Y_res:               grid posting in y direction (in m)
        
        ------------------input file names------------------
        demname:             (input; required) file path/name of the DEM
