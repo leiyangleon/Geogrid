@@ -11,7 +11,7 @@
 
 **For quick use:**
 
-_Radar-coordinate Imagery:_
+_1. Radar-coordinate Imagery:_
 * Refer to the file "testGeogrid_ISCE.py" (with ISCE) for the usage of the module and modify it for your own purpose
 * Mandatory input files include: 
 
@@ -50,7 +50,7 @@ _Radar-coordinate Imagery:_
   _Note: "winlocname" will always be created, while the others will be generated contingent upon that the corresponding optional inputs are provided as above._       
 
 
-_Map-projected Cartesian-coordinate Imagery:_
+_2. Map-projected Cartesian-coordinate Imagery:_
 * Refer to the file "testGeogrid_ISCE.py" (with ISCE) and "testGeogridOptical.py" (standalone) for the usage of the module and modify it for your own purpose
 * Input files include the image 1 (required), image 2 (required), a DEM (required; in units of m), local surface slope maps (unitless), velocity maps (in units of m/yr)
 * Mandatory input files include: 
@@ -94,19 +94,19 @@ _Map-projected Cartesian-coordinate Imagery:_
 
 * In Python environment, type the following to import the "Geogrid" module and initialize the "Geogrid" object
 
-_With ISCE:_
+  _With ISCE:_
 
        import isce
        from contrib.geo_autoRIFT.geogrid import Geogrid, GeogridOptical
        obj = Geogrid() or obj = GeogridOptical()
        obj.configure()
 
-_Standalone:_
+  _Standalone:_
 
        from geogrid import GeogridOptical
        obj = GeogridOptical()
 
-where "Geogrid()" is for radar-coordinate imagery and "GeogridOptical()" for Cartesian-coordinate imagery.
+  where "Geogrid()" is for radar-coordinate imagery and "GeogridOptical()" for Cartesian-coordinate imagery.
 
 
 * The "Geogrid" object has several parameters that have to be set up (listed below; can also be obtained by referring to "testGeogrid_ISCE.py"): 
@@ -121,8 +121,10 @@ where "Geogrid()" is for radar-coordinate imagery and "GeogridOptical()" for Car
        numberOfLines:       number of lines (in azimuth)
        numberOfSamples:     number of samples (in range)
        orbit:               ISCE orbit data structure
+       incidenceAngle:      local incidence angle of radar wave
+       epsg:                EPSG code for DEM map projection
        
-       ------------------Cartesian-coordinate imagery parameters (for Cartesian only)------------------
+       ------------------Map-projected Cartesian-coordinate imagery parameters (for optical only)------------------
        startingX:           starting coordinate in x direction
        startingY:           starting coordinate in y direction
        XSize:               resolution in x direction
@@ -130,41 +132,63 @@ where "Geogrid()" is for radar-coordinate imagery and "GeogridOptical()" for Car
        repeatTime:          time period between the acquisition of the two optical images
        numberOfLines:       number of lines (in y direction)
        numberOfSamples:     number of samples (in x direction)
+       epsgDem:             EPSG code for DEM map projection
+       epsgDat:             EPSG code for image data map projection
        
-       ------------------MISC------------------
+       ------------------MISC parameters (preparation for autoRIFT)------------------
        nodata_out:          nodata value in the output
-       chipSizeX0:          Smallest chip size allowed (in m), which only gets used when the chip size minimum and maximum are provided.
+       chipSizeX0:          Smallest chip size allowed (in m)
+       gridSpacingX:        Grid spacing in X direction (in m)
+       _xlim:               x coordinate limits (in m)
+       _ylim:               y coordinate limits (in m)
+       pOff:                Grid starting pixel index in horizontal direction (in integer pixels)
+       lOff:                Grid starting line index in vertical direction (in integer pixels)
+       pCount:              number of grid pixels in horizontal direction (in integer pixels)
+       lCount:              number of grid lines in vertical direction (in integer pixels)
+       X_res:               grid posting in horizontal direction (in m)
+       Y_res:               grid posting in vertical direction (in m)
        
        ------------------input file names------------------
        demname:             (input; required) file path/name of the DEM
-       dhdxname:            (input; not required) file path/name of the local surface slope in geographic x- (easting) coodinate
-       dhdyname:            (input; not required) file path/name of the local surface slope in geographic y- (northing) coodinate
-       vxname:              (input; not required) file path/name of the motion velocity in geographic x- (easting) coodinate
-       vyname:              (input; not required) file path/name of the motion velocity in geographic y- (northing) coodinate
-       srxname:             (input; not required) file path/name of the velocity search range in geographic x- (easting) coodinate
-       sryname:             (input; not required) file path/name of the velocity search range in geographic y- (northing) coodinate
-       csminxname:          (input; not required) file path/name of the chip size minimum (in m) in geographic x- (easting) coodinate
-       csminyname:          (input; not required) file path/name of the chip size minimum (in m) in geographic y- (northing) coodinate
-       csmaxxname:          (input; not required) file path/name of the chip size maximum (in m) in geographic x- (easting) coodinate
-       csmaxyname:          (input; not required) file path/name of the chip size maximum (in m) in geographic y- (northing) coodinate
+       dhdxname:            (input; not required) file path/name of the local surface slope in x-coodinate (easting)
+       dhdyname:            (input; not required) file path/name of the local surface slope in y-coodinate (northing)
+       vxname:              (input; not required) file path/name of the motion velocity (in m/yr) in x-coodinate (easting)
+       vyname:              (input; not required) file path/name of the motion velocity (in m/yr) in y-coodinate (northing)
+       srxname:             (input; not required) file path/name of the velocity search range (in m/yr) in x-coodinate (easting)
+       sryname:             (input; not required) file path/name of the velocity search range (in m/yr) in y-coodinate (northing)
+       csminxname:          (input; not required) file path/name of the chip size minimum (in m) in horizontal direction
+       csminyname:          (input; not required) file path/name of the chip size minimum (in m) in vertical direction
+       csmaxxname:          (input; not required) file path/name of the chip size maximum (in m) in horizontal direction
+       csmaxyname:          (input; not required) file path/name of the chip size maximum (in m) in vertical direction
        ssmname:             (input; not required) file path/name of the stable surface mask
        
        
        ------------------output file names------------------
-       winlocname:          (output) file name for the two-band (in x and y-direction) pixel indices (at each grid point)
-       winoffname:          (output) file name of the two-band (in x and y-direction) pixel displacement (at each grid point)
-       winsrname:           (output) file name of the two-band (in x and y-direction) pixel search range (at each grid point)
-       wincsminname:        (output) file name of the two-band (in x and y-direction) chip size minimum in pixels (at each grid point)
-       wincsmaxname:        (output) file name of the two-band (in x and y-direction) chip size maximum in pixels (at each grid point)
-       winssmname:          (output) file name of the stable surface mask (at each grid point)
-       winro2vxname:        (output) file name of the two-band (in x and y-direction) conversion coefficients from pixel displacement to motion velocity in geographic x-coordinate (at each grid point)
-       winro2vyname:        (output) file name of the two-band (in x and y-direction) conversion coefficients from pixel displacement to motion velocity in geographic y-coordinate (at each grid point)
+       winlocname:          (output) file path/name of the 2-band (in image horizontal and vertical direction) pixel indices (at each grid point)
+       winoffname:          (output) file path/name of the 2-band (in image horizontal and vertical direction) downstream search (expected) pixel displacement (at each grid point)
+       winsrname:           (output) file path/name of the 2-band (in image horizontal and vertical direction) pixel search range (at each grid point)
+       wincsminname:        (output) file path/name of the 2-band (in image horizontal and vertical direction) chip size minimum in pixels (at each grid point)
+       wincsmaxname:        (output) file path/name of the 2-band (in image horizontal and vertical direction) chip size maximum in pixels (at each grid point)
+       winssmname:          (output) file path/name of the stable surface mask (at each grid point)
+       winro2vxname:        (output) file path/name of the 2-band (in image horizontal and vertical direction) conversion coefficients from pixel displacement to x-direction (easting) motion velocity (at each grid point)
+       winro2vyname:        (output) file path/name of the 2-band (in image horizontal and vertical direction) conversion coefficients from pixel displacement to y-direction (northing) motion velocity (at each grid point)
        
        
-       Note: all the above outputs will be created. However, when "dhdxname" and "dhdyname" are not provided, "winoffname", "winro2vxname" and "winro2vyname" will be nodata everywhere; when "vxname", and "vyname" are not provided, "winoffname" will be nodata everywhere; only when all of "dhdxname", "dhdyname", "vxname", and "vyname" are provided, these four outputs ("winlocname", "winoffname", "winro2vxname" and "winro2vyname") have meaningful values. In addition, "winsrname" is meaningful when "srname" is provided; "wincsminname" is meaningul when "csminxname" and "csminyname" are provided; "wincsmaxname" is meaningul when "csmaxxname" and "csmaxyname" are provided; "winssmname" is meaningful when "ssmname" is provided. Otherwise, there will be nodata values as assigned by "nodata_out" everywhere in the outputs.
+* For using Geogrid, a grid must be specified, which can be a real DEM for processing radar imagery and a dummy DEM (with all zero values) for optical imagery. Each of the rest optional input can be either used or omitted.
+
+       input "demname"                                         -> output "winlocname"
+* For full/combinative use of the optional inputs, please see below, where some ouputs may depend on multiple inputs and others may only depend on single input
+                 
+       input "dhdxname"/"dhdyname"                             -> output "winro2vxname"/"winro2vyname"
+       input "dhdxname"/"dhdyname" and "vxname"/"vyname"       -> output "winro2vxname"/"winro2vyname" and "winoffname" 
+       input "dhdxname"/"dhdyname" and "srxname"/"sryname"     -> output "winro2vxname"/"winro2vyname" and "winsrname"
+       input "csminxname"/"csminyname"                         -> output "wincsminname"
+       input "csmaxxname"/"csmaxyname"                         -> output "wincsmaxname"
+       input "ssmname"                                         -> output "winssmname"
+  _Note: "winlocname" will always be created, while the others will be generated contingent upon that the corresponding optional inputs are provided as above._  
 
 * After the above parameters are set, run the module as below to create the output files
 
        obj.geogrid() or obj.runGeogrid()
 
-where "obj.geogrid()" is for radar-coordinate imagery, and "obj.runGeogrid()" for Cartesian-coordinate imagery.
+where "obj.geogrid()" is for radar-coordinate imagery, and "obj.runGeogrid()" for map-projected Cartesian-coordinate (optical) imagery.
