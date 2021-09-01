@@ -28,14 +28,14 @@ _1. Radar-coordinate Imagery:_
        "ssmname" (-ssm option):                                stable surface mask (boolean)
 * Output files may include all or some of the following (depending on the input fed in): 
 
-       "winlocname":        the range/azimuth pixel indices (2-band; in units of integer image pixels), 
-       "winoffname":        the downstream search (expected) range/azimuth pixel displacement (2-band; in units of integer image pixels), 
-       "winsrname":         the range/azimuth search range (2-band; in units of integer image pixels), 
-       "wincsminname":      the range/azimuth chip size minimum (2-band; in units of integer image pixels), 
-       "wincsmaxname":      the range/azimuth chip size maximum (2-band; in units of integer image pixels), 
-       "winssmname":        the stable surface mask (boolean), 
-       "winro2vxname":      the 2-by-1 conversion coefficients from radar range/azimuth displacement to x-direction motion velocity (3-band; 3rd band is conversion coefficient from range pixel displacement to range motion velocity), 
-       "winro2vyname":      the 2-by-1 conversion coefficients from radar range/azimuth displacement to y-direction motion velocity (3-band; 3rd band is conversion coefficient from azimuth pixel displacement to azimuth motion velocity). 
+       "winlocname":        range/azimuth pixel indices (2-band; in units of integer image pixels), 
+       "winoffname":        downstream search (expected) range/azimuth pixel displacement (2-band; in units of integer image pixels), 
+       "winsrname":         range/azimuth search range (2-band; in units of integer image pixels), 
+       "wincsminname":      range/azimuth chip size minimum (2-band; in units of integer image pixels), 
+       "wincsmaxname":      range/azimuth chip size maximum (2-band; in units of integer image pixels), 
+       "winssmname":        stable surface mask (boolean), 
+       "winro2vxname":      2-by-1 conversion coefficients from radar range/azimuth displacement to x-direction motion velocity (3-band; 3rd band is conversion coefficient from range pixel displacement to range motion velocity), 
+       "winro2vyname":      2-by-1 conversion coefficients from radar range/azimuth displacement to y-direction motion velocity (3-band; 3rd band is conversion coefficient from azimuth pixel displacement to azimuth motion velocity). 
 * For using Geogrid, a grid must be specified, which can be a real DEM for processing radar imagery and a dummy DEM (with all zero values) for optical imagery. Each of the rest optional input can be either used or omitted.
 
        input "demname"                                         -> output "winlocname"
@@ -67,14 +67,14 @@ _2. Map-projected Cartesian-coordinate Imagery:_
        "ssmname" (-ssm option):                                stable surface mask (boolean)
 * Output files may include all or some of the following (depending on the input fed in): 
 
-       "winlocname":        the horizontal/vertical pixel indices (2-band; in units of integer image pixels), 
-       "winoffname":        the downstream search (expected) horizontal/vertical pixel displacement (2-band; in units of integer image pixels), 
-       "winsrname":         the horizontal/vertical search range (2-band; in units of integer image pixels), 
-       "wincsminname":      the horizontal/vertical chip size minimum (2-band; in units of integer image pixels), 
-       "wincsmaxname":      the horizontal/vertical chip size maximum (2-band; in units of integer image pixels), 
-       "winssmname":        the stable surface mask (boolean), 
-       "winro2vxname":      the 2-by-1 conversion coefficients from horizontal/vertical displacement to x-direction motion velocity (2-band), 
-       "winro2vyname":      the 2-by-1 conversion coefficients from horizontal/vertical displacement to y-direction motion velocity (2-band). 
+       "winlocname":        horizontal/vertical pixel indices (2-band; in units of integer image pixels), 
+       "winoffname":        downstream search (expected) horizontal/vertical pixel displacement (2-band; in units of integer image pixels), 
+       "winsrname":         horizontal/vertical search range (2-band; in units of integer image pixels), 
+       "wincsminname":      horizontal/vertical chip size minimum (2-band; in units of integer image pixels), 
+       "wincsmaxname":      horizontal/vertical chip size maximum (2-band; in units of integer image pixels), 
+       "winssmname":        stable surface mask (boolean), 
+       "winro2vxname":      2-by-1 conversion coefficients from horizontal/vertical displacement to x-direction motion velocity (2-band), 
+       "winro2vyname":      2-by-1 conversion coefficients from horizontal/vertical displacement to y-direction motion velocity (2-band). 
 * For using Geogrid, a grid must be specified, which can be a real DEM for processing radar imagery and a dummy DEM (with all zero values) for optical imagery. Each of the rest optional input can be either used or omitted.
 
        input "demname"                                         -> output "winlocname"
